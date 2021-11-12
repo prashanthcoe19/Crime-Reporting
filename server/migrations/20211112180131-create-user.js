@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      fullName: {
+      firstName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -23,15 +23,15 @@ module.exports = {
       username: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
       phone: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      role: {
-        type: Sequelize.STRING,
-        defaultValue: "User",
+      isAdmin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
@@ -47,3 +47,4 @@ module.exports = {
     await queryInterface.dropTable("Users");
   },
 };
+//newmigrationfile

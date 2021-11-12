@@ -1,16 +1,9 @@
-const User = require("../models").User;
+const userService = require("../services/userService");
 
 module.exports.createUser = async (req, res) => {
-  const { fullName, email, password, username, phone, role } = req.body;
+  const { body } = req;
   try {
-    const user = await User.create({
-      fullName,
-      email,
-      password,
-      username,
-      phone,
-      role,
-    });
+    const user = await userService.createUser(body);
     return res.json(user);
   } catch (err) {
     console.log(err);

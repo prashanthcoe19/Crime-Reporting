@@ -1,6 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const bcrypt = require("bcryptjs");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -40,10 +39,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      role: {
-        type: DataTypes.STRING,
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: "User",
+        defaultValue: false,
       },
     },
     {
