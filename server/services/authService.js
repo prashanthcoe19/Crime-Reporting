@@ -9,4 +9,14 @@ const signIn = async (data) => {
     return err;
   }
 };
-module.exports = { signIn };
+
+const getCurrentUser = async (id) => {
+  try {
+    const user = await User.findByPk(id);
+    return user;
+  } catch (err) {
+    return err;
+  }
+};
+
+module.exports = { signIn, getCurrentUser };
