@@ -28,4 +28,5 @@ const deleteUser = async (id) => {
     return err;
   }
 };
+
 module.exports = { createUser, getAllUsers, deleteUser };
