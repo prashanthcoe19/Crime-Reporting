@@ -51,6 +51,17 @@ const updateCrimeStatus = async (data, id) => {
     return err;
   }
 };
+
+const searchCrime = async (term) => {
+  try {
+    const crimes = Crime.findAll({
+      where: { crimeType: { [Op.like]: `%${term}%` } },
+    });
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
 module.exports = {
   createCrimeReport,
   getCurrentUserCrimes,
@@ -58,4 +69,5 @@ module.exports = {
   getAllCrimeDetails,
   updateCrimeStatus,
   getCrimeById,
+  searchCrime,
 };

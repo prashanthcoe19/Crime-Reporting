@@ -13,7 +13,7 @@ const createUser = async (data) => {
 
 const getAllUsers = async () => {
   try {
-    const user = await User.findAll();
+    const user = await User.findAll({ attributes: { exclude: ["password"] } });
     return user;
   } catch (err) {
     return err;
@@ -28,5 +28,4 @@ const deleteUser = async (id) => {
     return err;
   }
 };
-
 module.exports = { createUser, getAllUsers, deleteUser };
