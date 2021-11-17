@@ -8,14 +8,15 @@ const createCrimeReport = async (data) => {
     return err;
   }
 };
-const getCurrentUserCrimes = async (id) => {
-  try {
-    const crimes = await Crime.findByPK(id);
-    return crimes;
-  } catch (err) {
-    return err;
-  }
-};
+// const getCurrentUserCrimes = async (id) => {
+//   try {
+//     const crimes = await Crime.findAll({where:{userID:id}});
+//     console.log(crimes);
+//     return crimes;
+//   } catch (err) {
+//     return err;
+//   }
+// };
 
 const getCrimeDetailsByUser = async (id) => {
   try {
@@ -64,7 +65,7 @@ const searchCrime = async (term) => {
 };
 module.exports = {
   createCrimeReport,
-  getCurrentUserCrimes,
+  // getCurrentUserCrimes,
   getCrimeDetailsByUser,
   getAllCrimeDetails,
   updateCrimeStatus,

@@ -1,65 +1,30 @@
-const LocalStrategy = require("passport-local").Strategy;
-const authService = require("../services/authService");
 const passport = require("passport");
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+const authService = require("../services/authService");
+const config = require("config");
+
+const opts = {};
+
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = config.get("jwtSecret");
+opts.passReqToCallback = true;
 
 passport.use(
-  new LocalStrategy(
-    {
-      usernameField: "email",
-      passwordField: "password",
-    },
-    async function (email, password, done) {
-      try {
-        const user = await authService.signIn(email);
-        // console.log(user);
-        if (!user) {
-          return done(null, false, { message: "Email not found" });
-        }
-        console.log(password);
-        if (!(await user.validPassword(password))) {
-          return done(null, false, { message: "Incorrect Password" });
-        }
-        return done(null, user);
-      } catch (err) {
-        done(err);
+  new JwtStrategy(opts, async function (req, jwt_payload, done) {
+    try {
+      console.log("Payload is: " + jwt_payload.id);
+      const user = await authService.getCurrentUser({
+        id: jwt_payload.id,
+      });
+      if (!user) {
+        return done(null, false, { message: "User not found" });
       }
+      req.user = user;
+      return done(null, user);
+    } catch (err) {
+      console.log(err);
     }
-  )
+  })
 );
-// const authenticateUser = async (email, password, done) => {
-//   try {
-//     const user = await authService.signIn(email);
-//     // console.log(user);
-//     if (!user) {
-//       return done(null, false, { message: "Email not found" });
-//     }
-//     console.log(password);
-//     if (!(await user.validPassword(password))) {
-//       return done(null, false, { message: "Incorrect Password" });
-//     }
-//     return done(null, user);
-//   } catch (err) {
-//     done(err);
-//   }
-// };
-
-// const strategy = new LocalStrategy(
-//   { usernameField: "email", passwordField: "password" },
-//   authenticateUser
-// );
-
-// passport.use(strategy);
-
-passport.serializeUser((user, done) => done(null, user.id));
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    console.log(`id ${5}`);
-    const user = await authService.getCurrentUser(id);
-    done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
-});
-
 module.exports = passport;

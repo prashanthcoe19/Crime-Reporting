@@ -2,9 +2,19 @@ const generateToken = require("../utils/generateToken");
 const authService = require("../services/authService");
 
 const login = async (req, res) => {
+  const { body } = req;
   try {
-    console.log(`request: ${req}`);
-    res.json(req.user);
+    const user = await authService.signIn(body.email);
+    if (!user) {
+      return res
+        .status(404)
+        .send("This email is not associated with any account");
+    }
+    if (!(await user.validPassword(body.password))) {
+      return res.status(400).send("Invalid Password");
+    }
+    const token = generateToken(user.id);
+    res.json({ user, token });
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
@@ -13,11 +23,7 @@ const login = async (req, res) => {
 
 const getLoggedinUser = async (req, res) => {
   try {
-    const user = await authService.getCurrentUser(req.user.id);
-    if (!user) {
-      res.status(404).json({ msg: "User not found" });
-    }
-    res.json(user);
+    res.json(req.user);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");

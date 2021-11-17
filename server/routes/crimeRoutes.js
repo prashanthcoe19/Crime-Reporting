@@ -1,18 +1,39 @@
 const express = require("express");
 const router = express.Router();
 const crimeController = require("../controller/crimeController");
-const { auth, admin } = require("../middleware/auth");
+const passport = require("../config/passport");
+const { admin } = require("../middleware/auth");
 
 router
   .route("/")
-  .get(auth, crimeController.loggedinUserCrimes)
-  .post(auth, crimeController.createReport);
+  .get(
+    passport.authenticate("jwt", { session: false }),
+    crimeController.loggedinUserCrimes
+  )
+  .post(
+    passport.authenticate("jwt", { session: false }),
+    crimeController.createReport
+  );
 
-router.route("/all").get(auth, admin, crimeController.allCrimeDetails);
+router
+  .route("/all")
+  .get(
+    passport.authenticate("jwt", { session: false }),
+    admin,
+    crimeController.allCrimeDetails
+  );
 
 router
   .route("/:id")
-  .get(auth, admin, crimeController.crimeDetailsByUser)
-  .put(auth, admin, crimeController.updateCrimeStatus);
+  .get(
+    passport.authenticate("jwt", { session: false }),
+    admin,
+    crimeController.crimeDetailsByUser
+  )
+  .put(
+    passport.authenticate("jwt", { session: false }),
+    admin,
+    crimeController.updateCrimeStatus
+  );
 
 module.exports = router;

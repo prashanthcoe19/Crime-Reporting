@@ -17,7 +17,8 @@ const createReport = async (req, res) => {
 
 const loggedinUserCrimes = async (req, res) => {
   try {
-    const crimes = await crimeService.getCurrentUserCrimes(req.user.id);
+    console.log("Id is" + req.user.id);
+    const crimes = await crimeService.getCrimeDetailsByUser(req.user.id);
     res.json(crimes);
   } catch (err) {
     console.log(err.message);

@@ -10,8 +10,9 @@ const signIn = async (email) => {
   }
 };
 
-const getCurrentUser = async (id) => {
+const getCurrentUser = async ({ id }) => {
   try {
+    console.log(`Id is ${id}`);
     const user = await User.findByPk(id);
     return user;
   } catch (err) {

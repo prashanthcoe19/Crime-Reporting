@@ -8,23 +8,29 @@ const crime = require("./routes/crimeRoutes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("passport");
-const session = require("express-session");
+// const session = require("express-session");
 const { notFound, errorHandling } = require("./middleware/error");
 connectSQL();
 // method inbuilt in express to recognize the incoming Request Object as a JSON Object
+
 app.use(express.json({ extended: false }));
 app.use(cookieParser());
 
 app.use(cors());
-app.use(
-  session({
-    secret: "this is secret key",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(
+//   session({
+//     secret: "this is secret key",
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//       expires: 1000 * 60 * 60 * 24,
+//     },
+//   })
+// );
+
+// require("./config/passportjwt")(passport);
+// app.use(passport.session());
 
 app.get("/", (req, res) => {
   res.json({ msg: "Welcome to crime reporting app" });
