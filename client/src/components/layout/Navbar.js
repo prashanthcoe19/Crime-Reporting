@@ -1,19 +1,18 @@
 import React, { useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import Logout from "./Logout";
 const Navbar = () => {
   const authContext = useContext(AuthContext);
   const { user, auth, loading } = authContext;
-  console.log(user);
+  console.log(auth, user);
   const authLinks = (
     <Fragment>
-      <ul>
+      <ul style={{ alignItems: "center" }}>
+        <li style={{ margin: "0 5px 0 0" }}>@{user?.username}</li>
         <li>
-          {auth && loading ? <h1>Loading...</h1> : <h5>@{user?.username}</h5>}
+          <Logout />
         </li>
-      </ul>
-      <ul>
-        <li>Logout</li>
       </ul>
     </Fragment>
   );
@@ -28,11 +27,11 @@ const Navbar = () => {
     </ul>
   );
   return (
-    <nav className="navbar navbar-expand-lg bg-dark">
+    <nav className="navbar navbar-expand-lg bg-primary">
       <h1>
-        <i className="fas fa-address-card">Crime-Reporting</i>
+        <i className="fas fa-search">Crime-Reporting</i>
       </h1>
-      <Fragment>{auth && !loading ? authLinks : guestLinks}</Fragment>
+      <Fragment>{user ? authLinks : guestLinks}</Fragment>
     </nav>
   );
 };

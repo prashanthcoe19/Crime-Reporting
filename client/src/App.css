@@ -34,31 +34,6 @@ img {
 }
 
 /* login */
-
-#login .container #login-row #login-column #login-box {
-  margin-top: 120px;
-  max-width: 600px;
-  height: 320px;
-  border: 1px solid #9c9c9c;
-  background-color: #b3aaaa;
-}
-#login .container #login-row #login-column #login-box #login-form {
-  padding: 20px;
-}
-#login
-  .container
-  #login-row
-  #login-column
-  #login-box
-  #login-form
-  #register-link {
-  margin-top: -85px;
-}
-
-/* login */
-
-/* navbar */
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -88,4 +63,13 @@ img {
 
 .navbar .welcome span {
   margin-right: 0.6rem;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
 }
