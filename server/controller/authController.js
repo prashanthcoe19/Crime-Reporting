@@ -7,11 +7,11 @@ const login = async (req, res) => {
     const user = await authService.signIn(body.email);
     if (!user) {
       return res
-        .status(404)
-        .send("This email is not associated with any account");
+        .status(400)
+        .json({ msg: "This email is not associated with any account" });
     }
     if (!(await user.validPassword(body.password))) {
-      return res.status(400).send("Invalid Password");
+      return res.status(400).json({ msg: "Invalid Password" });
     }
     const token = generateToken(user.id);
     res.json({ user, token });
