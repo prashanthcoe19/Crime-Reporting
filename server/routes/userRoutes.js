@@ -3,9 +3,10 @@ const router = express.Router();
 const userController = require("../controller/userController");
 const passport = require("../config/passport");
 const { admin } = require("../middleware/auth");
+const { signup } = require("../validation/validator");
 router
   .route("/")
-  .post(userController.createUser)
+  .post(signup, userController.createUser)
   .get(
     passport.authenticate("jwt", { session: false }),
     admin,

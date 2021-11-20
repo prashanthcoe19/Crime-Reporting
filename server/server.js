@@ -18,19 +18,6 @@ app.use(cookieParser());
 
 app.use(cors());
 app.use(passport.initialize());
-// app.use(
-//   session({
-//     secret: "this is secret key",
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//       expires: 1000 * 60 * 60 * 24,
-//     },
-//   })
-// );
-
-// require("./config/passportjwt")(passport);
-// app.use(passport.session());
 
 app.get("/", (req, res) => {
   res.json({ msg: "Welcome to crime reporting app" });

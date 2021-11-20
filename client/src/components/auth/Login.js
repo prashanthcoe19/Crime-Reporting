@@ -1,20 +1,12 @@
 import React, { useState, useContext } from "react";
 import api from "../../utils/api";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  Row,
-  InputGroup,
-  Alert,
-} from "react-bootstrap";
+import { Button, Col, Container, Form, Row, InputGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import setAuthToken from "../../utils/setAuthToken";
 import AlertC from "../layout/Alert";
 
-const Login = (props) => {
+const Login = () => {
   const [formData, setFormData] = useState({
     email: " ",
     password: " ",
