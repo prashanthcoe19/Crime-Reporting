@@ -5,14 +5,16 @@ const connectSQL = require("./config/db");
 const users = require("./routes/userRoutes");
 const auth = require("./routes/authRoutes");
 const crime = require("./routes/crimeRoutes");
+const admin = require("./routes/adminRoutes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("passport");
-// const session = require("express-session");
-const { notFound, errorHandling } = require("./middleware/error");
-connectSQL();
-// method inbuilt in express to recognize the incoming Request Object as a JSON Object
 
+const { notFound, errorHandling } = require("./middleware/error");
+
+connectSQL();
+
+// method inbuilt in express to recognize the incoming Request Object as a JSON Object
 app.use(express.json({ extended: false }));
 app.use(cookieParser());
 
@@ -26,6 +28,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use("/api/crime", crime);
+app.use("/api/admin", admin);
 
 // app.use(notFound);
 // app.use(errorHandling);

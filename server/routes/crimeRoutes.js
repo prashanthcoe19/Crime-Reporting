@@ -1,39 +1,36 @@
 const express = require("express");
 const router = express.Router();
-const crimeController = require("../controller/crimeController");
+const {
+  createReport,
+  loggedinUserCrimes,
+  getPendingReports,
+  getInProgressReports,
+  getCompletedReports,
+  getRejectedReports,
+} = require("../controller/crimeController");
+
+// const crimeController = require("../controller/crimeController");
 const passport = require("../config/passport");
-const { admin } = require("../middleware/auth");
 
 router
   .route("/")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    crimeController.loggedinUserCrimes
-  )
-  .post(
-    passport.authenticate("jwt", { session: false }),
-    crimeController.createReport
-  );
+  .get(passport.authenticate("jwt", { session: false }), loggedinUserCrimes)
+  .post(passport.authenticate("jwt", { session: false }), createReport);
 
 router
-  .route("/all")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    crimeController.allCrimeDetails
-  );
+  .route("/pending")
+  .get(passport.authenticate("jwt", { session: false }), getPendingReports);
 
 router
-  .route("/:id")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    crimeController.crimeDetailsByUser
-  )
-  .put(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    crimeController.updateCrimeStatus
-  );
+  .route("/completed")
+  .get(passport.authenticate("jwt", { session: false }), getCompletedReports);
+
+router
+  .route("/progress")
+  .get(passport.authenticate("jwt", { session: false }), getInProgressReports);
+
+router
+  .route("/rejected")
+  .get(passport.authenticate("jwt", { session: false }), getRejectedReports);
 
 module.exports = router;

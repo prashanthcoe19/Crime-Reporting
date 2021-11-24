@@ -36,23 +36,6 @@ const getCrimeById = async (id) => {
   }
 };
 
-const getAllCrimeDetails = async () => {
-  try {
-    const crimes = await Crime.findAll();
-    return crimes;
-  } catch (err) {
-    return err;
-  }
-};
-
-const updateCrimeStatus = async (data, id) => {
-  try {
-    await Crime.update({ status: data }, { where: { id: id } });
-  } catch (err) {
-    return err;
-  }
-};
-
 const searchCrime = async (term) => {
   try {
     const crimes = Crime.findAll({
@@ -63,12 +46,59 @@ const searchCrime = async (term) => {
     return err;
   }
 };
+
+const getPending = async (id) => {
+  console.log(id);
+  try {
+    const crimes = Crime.findAll({ where: { status: "Pending", userID: id } });
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
+
+const getInProgress = async (id) => {
+  console.log(id);
+  try {
+    const crimes = Crime.findAll({
+      where: { status: "In Progress", userID: id },
+    });
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
+
+const getRejected = async (id) => {
+  console.log(id);
+  try {
+    const crimes = Crime.findAll({ where: { status: "Rejected", userID: id } });
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
+
+const getCompleted = async (id) => {
+  console.log(id);
+  try {
+    const crimes = Crime.findAll({
+      where: { status: "Completed", userID: id },
+    });
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
+
 module.exports = {
   createCrimeReport,
   // getCurrentUserCrimes,
   getCrimeDetailsByUser,
-  getAllCrimeDetails,
-  updateCrimeStatus,
   getCrimeById,
   searchCrime,
+  getPending,
+  getCompleted,
+  getInProgress,
+  getRejected,
 };

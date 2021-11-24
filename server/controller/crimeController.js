@@ -26,41 +26,51 @@ const loggedinUserCrimes = async (req, res) => {
   }
 };
 
-const crimeDetailsByUser = async (req, res) => {
-  console.log(req.params.id);
+// report according to status of currently logged in user
+const getPendingReports = async (req, res) => {
   try {
-    const crimes = await crimeService.getCrimeDetailsByUser(req.params.id);
-    res.json(crimes);
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server Error");
-  }
-};
-
-const allCrimeDetails = async (req, res) => {
-  try {
-    const crimes = await crimeService.getAllCrimeDetails();
-    res.json(crimes);
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server Error");
-  }
-};
-
-const updateCrimeStatus = async (req, res) => {
-  try {
-    await crimeService.updateCrimeStatus(req.body.status, req.params.id);
-    const crime = await crimeService.getCrimeById(req.params.id);
+    const crime = await crimeService.getPending(req.user.id);
     res.json(crime);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
   }
 };
+const getInProgressReports = async (req, res) => {
+  try {
+    const crime = await crimeService.getInProgress(req.user.id);
+    res.json(crime);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+const getCompletedReports = async (req, res) => {
+  try {
+    const crime = await crimeService.getCompleted(req.user.id);
+    res.json(crime);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+const getRejectedReports = async (req, res) => {
+  try {
+    const crime = await crimeService.getRejected(req.user.id);
+    res.json(crime);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
 module.exports = {
   createReport,
   loggedinUserCrimes,
-  crimeDetailsByUser,
-  allCrimeDetails,
-  updateCrimeStatus,
+  getPendingReports,
+  getInProgressReports,
+  getCompletedReports,
+  getRejectedReports,
 };

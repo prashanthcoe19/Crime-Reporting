@@ -11,21 +11,4 @@ const createUser = async (data) => {
   }
 };
 
-const getAllUsers = async () => {
-  try {
-    const user = await User.findAll({ attributes: { exclude: ["password"] } });
-    return user;
-  } catch (err) {
-    return err;
-  }
-};
-
-const deleteUser = async (id) => {
-  try {
-    const user = await User.findByPk(id);
-    return user;
-  } catch (err) {
-    return err;
-  }
-};
-module.exports = { createUser, getAllUsers, deleteUser };
+module.exports = { createUser };
