@@ -9,13 +9,7 @@ const Private = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        loading ? (
-          <h1>Loading...</h1>
-        ) : auth ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
+        auth ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );

@@ -27,7 +27,7 @@ const Navbar = () => {
     </ul>
   );
   return (
-    <nav className="navbar navbar-expand-lg bg-primary">
+    <nav className="navbar navbar-expand-lg">
       <h1>
         <i className="fas fa-search">Crime-Reporting</i>
       </h1>

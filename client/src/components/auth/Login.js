@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import api from "../../utils/api";
 import { Button, Col, Container, Form, Row, InputGroup } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import setAuthToken from "../../utils/setAuthToken";
 import AlertC from "../layout/Alert";
@@ -22,7 +22,7 @@ const Login = () => {
 
   const authContext = useContext(AuthContext);
 
-  const { getUser } = authContext;
+  const { getUser, auth, loading } = authContext;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,6 +49,9 @@ const Login = () => {
       setError(err.response.data.msg);
     }
   };
+  if (!loading && auth) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <Container>
       <h1 className="text-primary mt-2 p-3 text-center rounded">Login</h1>

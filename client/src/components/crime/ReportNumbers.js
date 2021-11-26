@@ -1,62 +1,61 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Row, Card, Col } from "react-bootstrap";
+import { CrimeContext } from "../../context/CrimeContext";
+// import Spinnner from "../layout/Spinner";
 const ReportNumbers = () => {
+  const crimeContext = useContext(CrimeContext);
+  const {
+    loading,
+    pending,
+    inProgress,
+    completed,
+    rejected,
+    getPendingReports,
+    getCompletedReports,
+    getRejectedReports,
+    getInProgressReports,
+  } = crimeContext;
+  useEffect(() => {
+    getPendingReports();
+    getCompletedReports();
+    getRejectedReports();
+    getInProgressReports();
+  }, []);
+
+  // if (loading) return <Spinnner />;
   return (
     <Container>
       <Row>
         <Col>
-          <Card
-            style={{
-              width: "12rem",
-              background:
-                "linear-gradient(to bottom, #0099ff 0%, #ccffcc 100%)",
-            }}
-          >
+          <Card>
             <Card.Body>
-              <Card.Title>Total Reported</Card.Title>
-              <Card.Text>5</Card.Text>
+              <Card.Title>Solved</Card.Title>
+              <Card.Text>{!loading ? completed?.length : 0}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
         <Col>
-          <Card
-            style={{
-              width: "12rem",
-              background:
-                "linear-gradient(to bottom, #ff9933 0%, #ff33cc 100%)",
-            }}
-          >
+          <Card>
             <Card.Body>
               <Card.Title>Pending</Card.Title>
-              <Card.Text>5</Card.Text>
+              <Card.Text>{!loading ? pending?.length : 0}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
+
         <Col>
-          <Card
-            style={{
-              width: "12rem",
-              background:
-                "linear-gradient(to bottom, #00ff00 0%, #999966 100%)",
-            }}
-          >
+          <Card>
             <Card.Body>
               <Card.Title>In Progress</Card.Title>
-              <Card.Text>5</Card.Text>
+              <Card.Text>{!loading ? inProgress?.length : 0}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
         <Col>
-          <Card
-            style={{
-              width: "12rem",
-              background:
-                "linear-gradient(to bottom, #ff0000 0%, #996633 100%)",
-            }}
-          >
+          <Card>
             <Card.Body>
               <Card.Title>Rejected</Card.Title>
-              <Card.Text>5</Card.Text>
+              <Card.Text>{!loading ? rejected?.length : 0}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
