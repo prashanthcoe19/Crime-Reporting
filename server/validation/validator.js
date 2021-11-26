@@ -37,4 +37,15 @@ const signin = [
   },
 ];
 
-module.exports = { signup, signin };
+const report = [
+  check("crimeType").notEmpty("This field cannot be empty"),
+  check("description").notEmpty("This field cannot be empty"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(422).json({ errors: errors.array() });
+    next();
+  },
+];
+
+module.exports = { signup, signin, report };
