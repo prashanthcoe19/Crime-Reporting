@@ -80,7 +80,13 @@ const EmployeeList = () => {
         </tbody>
       </Table>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Create Report</Modal.Title>
         </Modal.Header>

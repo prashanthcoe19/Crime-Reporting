@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState, useEffect } from "react";
 import { CrimeContext } from "../../context/CrimeContext";
+import EditReport from "./EditReport";
 import { Modal, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import moment from "moment";
 // import EditForm from "./EditForm";
@@ -43,7 +44,7 @@ const Reports = ({ report }) => {
           <Modal.Title>Edit Report</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CreateReport />
+          <EditReport report={report} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

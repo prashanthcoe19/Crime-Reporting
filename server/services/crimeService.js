@@ -8,6 +8,19 @@ const createCrimeReport = async (data) => {
     return err;
   }
 };
+
+const editReport = async (data, id) => {
+  // console.log(`Data ${data} id: ${id}`);
+  try {
+    const report = await Crime.update(data, {
+      where: { id: id },
+    });
+    console.log(report);
+    return report;
+  } catch (err) {
+    return err;
+  }
+};
 // const getCurrentUserCrimes = async (id) => {
 //   try {
 //     const crimes = await Crime.findAll({where:{userID:id}});
@@ -101,4 +114,5 @@ module.exports = {
   getCompleted,
   getInProgress,
   getRejected,
+  editReport,
 };

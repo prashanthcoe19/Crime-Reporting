@@ -65,9 +65,14 @@ const CrimeContextProvider = (props) => {
       console.log(err);
     }
   };
-  // const clearCrimeState = ()=>{
-
-  // }
+  const clearCrimeState = () => {
+    setCrimes(null);
+    setPending(null);
+    setCompleted(null);
+    setRejected(null);
+    setinProgress(null);
+    setLoading(true);
+  };
   useEffect(() => {
     getCurrentUserReports();
   }, []);
@@ -89,6 +94,7 @@ const CrimeContextProvider = (props) => {
         getCompletedReports,
         getRejectedReports,
         getInProgressReports,
+        clearCrimeState,
         ...props,
       }}
     >

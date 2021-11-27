@@ -2,6 +2,7 @@ const crimeService = require("../services/crimeService");
 
 const createReport = async (req, res) => {
   const { crimeType, description } = req.body;
+
   try {
     const crime = await crimeService.createCrimeReport({
       crimeType,
@@ -9,6 +10,24 @@ const createReport = async (req, res) => {
       userID: req.user.id,
     });
     res.json(crime);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+const updateReport = async (req, res) => {
+  const { crimeType, description } = req.body;
+  try {
+    await crimeService.editReport(
+      {
+        crimeType,
+        description,
+        userID: req.user.id,
+      },
+      req.params.id
+    );
+    const report = await crimeService.getCrimeById(req.params.id);
+    res.json(report);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
@@ -26,7 +45,12 @@ const loggedinUserCrimes = async (req, res) => {
   }
 };
 
-// report according to status of currently logged in user
+const editReport = async (req, res) => {
+  try {
+  } catch (err) {}
+};
+
+// reports according to status of currently logged in user
 const getPendingReports = async (req, res) => {
   try {
     const crime = await crimeService.getPending(req.user.id);
@@ -73,4 +97,5 @@ module.exports = {
   getInProgressReports,
   getCompletedReports,
   getRejectedReports,
+  updateReport,
 };

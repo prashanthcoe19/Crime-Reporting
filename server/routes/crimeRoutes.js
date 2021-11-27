@@ -7,6 +7,7 @@ const {
   getInProgressReports,
   getCompletedReports,
   getRejectedReports,
+  updateReport,
 } = require("../controller/crimeController");
 
 // const crimeController = require("../controller/crimeController");
@@ -33,4 +34,7 @@ router
   .route("/rejected")
   .get(passport.authenticate("jwt", { session: false }), getRejectedReports);
 
+router
+  .route("/:id")
+  .put(passport.authenticate("jwt", { session: false }), updateReport);
 module.exports = router;
