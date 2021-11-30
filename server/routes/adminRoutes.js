@@ -13,6 +13,7 @@ const {
 } = require("../controller/adminController");
 const passport = require("../config/passport");
 const { admin } = require("../middleware/auth");
+
 router
   .route("/")
   .get(passport.authenticate("jwt", { session: false }), getAllUsers);

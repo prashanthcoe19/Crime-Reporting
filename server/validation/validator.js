@@ -1,7 +1,7 @@
 const { check, validationResult } = require("express-validator");
 
 const signup = [
-  check("name")
+  check("fullName")
     .trim()
     .escape()
     .not()
@@ -12,8 +12,10 @@ const signup = [
   check("password")
     .notEmpty()
     .withMessage("Password is Required")
-    .isLength({ min: 8 })
+    .isLength({ min: 6 })
     .withMessage("Password must be 8 characters"),
+  check("username").notEmpty(),
+  check("phone").notEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
@@ -27,7 +29,7 @@ const signin = [
   check("password")
     .notEmpty()
     .withMessage("password is required")
-    .isLength({ min: 8 })
+    .isLength({ min: 6 })
     .withMessage("password must be 8 characters"),
   (req, res, next) => {
     const errors = validationResult(req);

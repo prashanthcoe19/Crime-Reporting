@@ -45,12 +45,23 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
       },
+      resetToken: {
+        type: DataTypes.STRING,
+      },
+      expireToken: {
+        type: DataTypes.DATE,
+      },
     },
     {
       hooks: {
         beforeCreate: async function (user) {
           const salt = await bcrypt.genSalt(10);
           user.password = await bcrypt.hash(user.password, salt);
+        },
+        beforeUpdate: async function (user) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
+          console.log(user.password);
         },
       },
       instanceMethods: {

@@ -1,6 +1,6 @@
 const User = require("../models").User;
 
-const signIn = async (email) => {
+const findUserByEmail = async (email) => {
   // const { email } = data;
   try {
     const user = await User.findOne({ where: { email: email } });
@@ -20,4 +20,4 @@ const getCurrentUser = async ({ id }) => {
   }
 };
 
-module.exports = { signIn, getCurrentUser };
+module.exports = { findUserByEmail, getCurrentUser };
