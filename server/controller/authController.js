@@ -1,8 +1,8 @@
 const generateToken = require("../utils/generateToken");
-const authService = require("../services/authService");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+const userService = require("../services/userService");
 const User = require("../models").User;
 
 const transporter = nodemailer.createTransport(
@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport(
 const login = async (req, res) => {
   const { body } = req;
   try {
-    const user = await authService.findUserByEmail(body.email);
+    const user = await userService.findUserByEmail(body.email);
     if (!user) {
       return res
         .status(400)
@@ -35,7 +35,7 @@ const login = async (req, res) => {
 
 const getLoggedinUser = async (req, res) => {
   try {
-    const user = await authService.getCurrentUser(req.user.id);
+    const user = await userService.getUserById(req.user.id);
     res.json(user);
   } catch (err) {
     console.log(err.message);
@@ -49,7 +49,7 @@ const resetPassword = async (req, res) => {
     crypto.randomBytes(32, async (err, buffer) => {
       if (err) console.log(err);
       const token = buffer.toString("hex");
-      const user = await authService.findUserByEmail(req.body.email);
+      const user = await userService.findUserByEmail(req.body.email);
       if (!user) {
         return res
           .status(400)

@@ -10,29 +10,38 @@ const {
   allRejectedReports,
   allCompletedReports,
   updateCrimeStatus,
+  adminLoginView,
+  adminRegisterView,
+  adminRegister,
+  adminLogin,
+  adminDashboard,
+  getAllCrimeReports,
 } = require("../controller/adminController");
 const passport = require("../config/passport");
-const { admin } = require("../middleware/auth");
+const passportAdmin = require("../config/passportAdmin");
+const { admin, auth } = require("../middleware/auth");
+
+router.route("/dashboard").get(auth, admin, adminDashboard);
+
+router.route("/login").get(adminLoginView).post(adminLogin);
+
+router.route("/register").get(adminRegisterView).post(adminRegister);
+
+router.route("/reportList").get(auth, admin, getAllCrimeReports);
 
 router
-  .route("/")
+  .route("/all")
   .get(passport.authenticate("jwt", { session: false }), getAllUsers);
 
-router
-  .route("/crime")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    allCrimeDetails
-  );
+// router
+//   .route("/crime")
+//   .get(
+//     passport.authenticate("jwt", { session: false }),
+//     admin,
+//     allCrimeDetails
+//   );
 
-router
-  .route("/pending")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    allPendingReports
-  );
+router.route("/pending").get(auth, admin, allPendingReports);
 
 router
   .route("/progess")

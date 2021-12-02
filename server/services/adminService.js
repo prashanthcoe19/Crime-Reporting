@@ -27,8 +27,7 @@ const updateCrimeStatus = async (data, id) => {
   }
 };
 
-const allPending = async (id) => {
-  console.log(id);
+const allPending = async () => {
   try {
     const crimes = Crime.findAll({ where: { status: "Pending" } });
     return crimes;
@@ -37,8 +36,7 @@ const allPending = async (id) => {
   }
 };
 
-const allInProgress = async (id) => {
-  console.log(id);
+const allInProgress = async () => {
   try {
     const crimes = Crime.findAll({ where: { status: "In Progress" } });
     return crimes;
@@ -47,8 +45,7 @@ const allInProgress = async (id) => {
   }
 };
 
-const allRejected = async (id) => {
-  console.log(id);
+const allRejected = async () => {
   try {
     const crimes = Crime.findAll({ where: { status: "Rejected" } });
     return crimes;
@@ -57,8 +54,7 @@ const allRejected = async (id) => {
   }
 };
 
-const allCompleted = async (id) => {
-  console.log(id);
+const allCompleted = async () => {
   try {
     const crimes = Crime.findAll({ where: { status: "Completed" } });
     return crimes;

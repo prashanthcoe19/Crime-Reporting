@@ -9,21 +9,34 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("passport");
 const dotenv = require("dotenv");
+const path = require("path");
 
 const { notFound, errorHandling } = require("./middleware/error");
 
 connectSQL();
 
 dotenv.config();
+
+app.set("views", path.join(__dirname, "views"));
+
+console.log(path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
+app.use(express.static(path.join(__dirname + "/public")));
+
 // method inbuilt in express to recognize the incoming Request Object as a JSON Object
 app.use(express.json({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(cors());
+// app.use(passportAdmin.initialize);
 app.use(passport.initialize());
 
 app.get("/", (req, res) => {
-  res.json({ msg: "Welcome to crime reporting app" });
+  console.log(path.join(__dirname + "/public"));
+  res.render("admin/landing.ejs");
+  // res.json({ msg: "Welcome to crime reporting app" });
 });
 
 app.use("/api/users", users);

@@ -5,8 +5,8 @@ const config = require("config");
 const auth = async (req, res, next) => {
   //get token from header
 
-  const token = req.cookies.crimeJWT;
-  console.log(token);
+  const token = req.cookies.jwt;
+  // const token = req.header("x-auth-token");
   //check if not token
 
   if (!token) {
@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, config.get("jwtSecret"));
-    console.log(decoded);
+    // console.log(decoded);
     req.user = await User.findByPk(decoded.id);
     // req.user = decoded.user;
     next();

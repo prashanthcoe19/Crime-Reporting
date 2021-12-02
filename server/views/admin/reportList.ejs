@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../layout/header.ejs") %>
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Preloader -->
+      <div
+        class="preloader flex-column justify-content-center align-items-center"
+      >
+        <img
+          class="animation__shake"
+          src="/dist/img/AdminLTELogo.png"
+          alt="AdminLTELogo"
+          height="60"
+          width="60"
+        />
+      </div>
+      <%- include("../layout/navbar.ejs") %> <%-include("../layout/sidebar.ejs")
+      %>
+      <div class="content-wrapper">
+        <%- include("../layout/content-wrapper.ejs") %> <%-
+        include("../partials/reportLists.ejs") %>
+      </div>
+      <%- include("../layout/footer.ejs") %>
+    </div>
+    <%- include("../layout/js.ejs") %>
+  </body>
+</html>

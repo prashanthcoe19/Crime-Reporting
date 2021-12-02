@@ -1,6 +1,98 @@
 const adminService = require("../services/adminService");
 const userService = require("../services/userService");
 const crimeService = require("../services/crimeService");
+const generateToken = require("../utils/generateToken");
+const moment = require("moment");
+//view pages for admin login and register
+const adminLoginView = (req, res) => {
+  res.render("../views/auth/login.ejs");
+};
+
+const adminRegisterView = (req, res) => {
+  res.render("../views/auth/register.ejs");
+};
+const adminDashboard = async (req, res) => {
+  try {
+    const pending = await adminService.allPending();
+    const inProgress = await adminService.allInProgress();
+    const completed = await adminService.allCompleted();
+    const rejected = await adminService.allRejected();
+    res.render("../views/admin/landing.ejs", {
+      user: req.user,
+      pending: pending.length,
+      inProgress: inProgress.length,
+      completed: completed.length,
+      rejected: rejected.length,
+      title: "Report Numbers",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getAllCrimeReports = async (req, res) => {
+  try {
+    const crimes = await adminService.getAllCrimeDetails();
+    res.render("../views/admin/reportList.ejs", {
+      user: req.user,
+      crimes: crimes,
+      title: "Report List",
+      moment: moment,
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+const adminRegister = async (req, res) => {
+  const { fullName, email, password, phone, username } = req.body;
+  try {
+    let admin = await userService.findUserByEmail(email);
+    // console.log(admin);
+    if (admin) {
+      console.error("User already exists");
+      return res.status(400).send("User already exists");
+    }
+    admin = await userService.createUser({
+      fullName,
+      email,
+      password,
+      username,
+      phone,
+      isAdmin: true,
+    });
+    if (admin) {
+      res.redirect("/api/admin/login");
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+const maxAge = 3 * 24 * 60 * 60;
+
+const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await userService.findUserByEmail(email);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ msg: "This email is not associated with any account" });
+    }
+    if (!(await user.validPassword(password))) {
+      return res.status(400).json({ msg: "Invalid Password" });
+    }
+    const token = generateToken(user.id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.redirect("/api/admin/dashboard");
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
 
 const getAllUsers = async (req, res) => {
   try {
@@ -36,15 +128,15 @@ const crimeDetailsByUser = async (req, res) => {
   }
 };
 
-const allCrimeDetails = async (req, res) => {
-  try {
-    const crimes = await adminService.getAllCrimeDetails();
-    res.json(crimes);
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server Error");
-  }
-};
+// const allCrimeDetails = async (req, res) => {
+//   try {
+//     const crimes = await adminService.getAllCrimeDetails();
+//     res.json(crimes);
+//   } catch (err) {
+//     console.log(err.message);
+//     res.status(500).send("Server Error");
+//   }
+// };
 
 const updateCrimeStatus = async (req, res) => {
   try {
@@ -60,7 +152,7 @@ const updateCrimeStatus = async (req, res) => {
 const allPendingReports = async (req, res) => {
   try {
     const crime = await adminService.allPending();
-    res.json(crime);
+    console.log(crime);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
@@ -98,8 +190,13 @@ const allRejectedReports = async (req, res) => {
 };
 
 module.exports = {
+  adminLoginView,
+  adminRegisterView,
+  adminDashboard,
+  adminRegister,
+  adminLogin,
   crimeDetailsByUser,
-  allCrimeDetails,
+  getAllCrimeReports,
   updateCrimeStatus,
   deleteUser,
   getAllUsers,
