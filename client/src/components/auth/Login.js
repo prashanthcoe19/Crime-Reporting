@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import api from "../../utils/api";
 import { Button, Col, Container, Form, Row, InputGroup } from "react-bootstrap";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import setAuthToken from "../../utils/setAuthToken";
 import AlertC from "../layout/Alert";
@@ -22,7 +22,7 @@ const Login = () => {
 
   const authContext = useContext(AuthContext);
 
-  const { user, getUser, auth, loading } = authContext;
+  const { getUser, auth, loading } = authContext;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,7 +54,7 @@ const Login = () => {
   }
   return (
     <Container>
-      <h1 className="text-primary mt-2 p-3 text-center rounded">Login</h1>
+      <h1 className="text-primary mt-2 p-3 text-center rounded">Send Token</h1>
       <Row className="mt-1">
         <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
           {error ? <AlertC msg={error} /> : null}
@@ -93,6 +93,11 @@ const Login = () => {
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
+            <Link to="/forgetPassword">
+              <button type="button" class="btn btn-link">
+                Forgot Password?
+              </button>
+            </Link>
             <div className="d-grid gap-2 mt-2">
               <Button variant="primary btn-block" type="submit">
                 Login
