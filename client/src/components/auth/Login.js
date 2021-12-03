@@ -22,7 +22,7 @@ const Login = () => {
 
   const authContext = useContext(AuthContext);
 
-  const { getUser, auth, loading } = authContext;
+  const { user, getUser, auth, loading } = authContext;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

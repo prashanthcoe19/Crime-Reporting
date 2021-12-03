@@ -4,12 +4,12 @@ import { AuthContext } from "../../context/AuthContext";
 import Logout from "./Logout";
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const { user, auth, loading } = authContext;
+  const { user, auth } = authContext;
   console.log(auth, user);
   const authLinks = (
     <Fragment>
       <ul style={{ alignItems: "center" }}>
-        <li style={{ margin: "0 5px 0 0" }}>@{user?.username}</li>
+        <li style={{ margin: "0 5px 0 0" }}>@{auth ? user?.username : null}</li>
         <li>
           <Logout />
         </li>
@@ -31,7 +31,7 @@ const Navbar = () => {
       <h1>
         <i className="fas fa-search">Crime-Reporting</i>
       </h1>
-      <Fragment>{user ? authLinks : guestLinks}</Fragment>
+      <Fragment>{auth && user ? authLinks : guestLinks}</Fragment>
     </nav>
   );
 };

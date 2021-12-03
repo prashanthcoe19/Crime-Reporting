@@ -4,6 +4,7 @@ import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
 // import Dashboard from "../components/layout/Dashboard";
 import Private from "./Private";
+import Index from "../components/layout/Index";
 import CrimeDashboard from "../components/crime/CrimeDashboard";
 
 const Routess = () => {
@@ -13,7 +14,7 @@ const Routess = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Private exact path="/dashboard" component={CrimeDashboard} />
-        {/* <Private exact path="/dashboard" component={Dashboard} /> */}
+        <Private exact path="/index" component={Index} />
       </Switch>
     </section>
   );

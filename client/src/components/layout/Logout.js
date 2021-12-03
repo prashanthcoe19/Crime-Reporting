@@ -1,12 +1,14 @@
 import React, { Fragment, useState, useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { AuthContext } from "../../context/AuthContext";
+import { CrimeContext } from "../../context/CrimeContext";
 const Logout = ({ history }) => {
   const [show, setShow] = useState(false);
   const { logout } = useContext(AuthContext);
-
+  const { clearCrimeState } = useContext(CrimeContext);
   const handleLogout = () => {
     logout();
+    clearCrimeState();
     setShow(false);
     // setPersonnal(null);
   };

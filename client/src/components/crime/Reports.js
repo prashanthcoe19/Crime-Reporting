@@ -1,10 +1,7 @@
-import React, { Fragment, useContext, useState, useEffect } from "react";
-import { CrimeContext } from "../../context/CrimeContext";
+import React, { Fragment, useState, useEffect } from "react";
 import EditReport from "./EditReport";
 import { Modal, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import moment from "moment";
-// import EditForm from "./EditForm";
-import CreateReport from "./CreateReport";
 
 const Reports = ({ report }) => {
   const [show, setShow] = useState(false);

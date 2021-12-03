@@ -5,7 +5,7 @@ import Reports from "./Reports";
 import CreateReport from "./CreateReport";
 // import Pagination from "./Pagination";
 
-const EmployeeList = () => {
+const ReportList = () => {
   const crimeContext = useContext(CrimeContext);
 
   const { crimes } = crimeContext;
@@ -103,4 +103,4 @@ const EmployeeList = () => {
   );
 };
 
-export default EmployeeList;
+export default ReportList;

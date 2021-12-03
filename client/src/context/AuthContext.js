@@ -11,7 +11,7 @@ const AuthContextProvider = (props) => {
   const getUser = async () => {
     try {
       const res = await api.get("/auth");
-      console.log("Get:" + res.data);
+      console.log(res.data);
       setUser(res.data);
       setAuth(true);
       setLoading(false);

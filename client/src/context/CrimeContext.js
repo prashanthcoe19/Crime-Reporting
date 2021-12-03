@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import api from "../utils/api";
-import setAuthToken from "../utils/setAuthToken";
+// import setAuthToken from "../utils/setAuthToken";
 
 export const CrimeContext = createContext();
 
@@ -11,6 +11,17 @@ const CrimeContextProvider = (props) => {
   const [inProgress, setinProgress] = useState(null);
   const [completed, setCompleted] = useState(null);
   const [rejected, setRejected] = useState(null);
+
+  const getAllCrimeReports = async () => {
+    try {
+      const res = await api.get("/admin/crime");
+      console.log(res.data);
+      setCrimes(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getCurrentUserReports = async () => {
     try {
@@ -26,7 +37,7 @@ const CrimeContextProvider = (props) => {
 
   const getPendingReports = async () => {
     try {
-      const res = await api.get("/crime/pending");
+      const res = await api.get("/admin/pending");
       console.log(res.data);
       setPending(res.data);
       // setLoading(false);
@@ -37,7 +48,7 @@ const CrimeContextProvider = (props) => {
 
   const getInProgressReports = async () => {
     try {
-      const res = await api.get("/crime/progress");
+      const res = await api.get("/admin/progress");
       console.log(res.data);
       setinProgress(res.data);
       // setLoading(false);
@@ -47,7 +58,7 @@ const CrimeContextProvider = (props) => {
   };
   const getCompletedReports = async () => {
     try {
-      const res = await api.get("/crime/completed");
+      const res = await api.get("/admin/completed");
       console.log(res.data);
       setCompleted(res.data);
       // setLoading(false);
@@ -57,7 +68,7 @@ const CrimeContextProvider = (props) => {
   };
   const getRejectedReports = async () => {
     try {
-      const res = await api.get("/crime/rejected");
+      const res = await api.get("/admin/rejected");
       console.log(res.data);
       setRejected(res.data);
       // setLoading(false);
@@ -75,6 +86,7 @@ const CrimeContextProvider = (props) => {
   };
   useEffect(() => {
     getCurrentUserReports();
+    // getPendingReports();
   }, []);
 
   // if (loading) return <Spinnner />;
@@ -84,6 +96,7 @@ const CrimeContextProvider = (props) => {
         crimes,
         setCrimes,
         getCurrentUserReports,
+        getAllCrimeReports,
         loading,
         setLoading,
         pending,

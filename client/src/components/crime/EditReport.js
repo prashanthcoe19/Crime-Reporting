@@ -13,6 +13,7 @@ const EditReport = ({ report }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
       const res = await api.put(`/crime/${id}`, formData);
       console.log(res.data);
@@ -32,7 +33,7 @@ const EditReport = ({ report }) => {
           value={crimeType}
           onChange={(e) => setCrimeType(e.target.value)}
         >
-          <option value="Theft">Theft</option>
+          <option defaultValue="Theft">Theft</option>
           <option value="Burglary">Burglary</option>
           <option value="Murder">Murder</option>
           <option value="Attempt to Murder">Attempt to Murder</option>

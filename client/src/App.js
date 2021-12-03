@@ -7,10 +7,11 @@ import CrimeContextProvider from "./context/CrimeContext";
 import setAuthToken from "./utils/setAuthToken";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Routess from "./routes/Routess";
-
+// import AdminRoute from "./routes/AdminRoute";
 import "./App.css";
 
 const App = () => {
+  // let location = useLocation();
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -26,9 +27,8 @@ const App = () => {
             <Switch>
               <Route exact path="/" component={Landing} />
               <Route component={Routess} />
+              {/* <Route component={AdminRoute} /> */}
               <Route path="*" component={NotFound} />
-              {/* <Route path="/login" element={<Login />} />
-            <Route exact path="/dashboard" element={<Dashboard />} /> */}
             </Switch>
           </BrowserRouter>
         </CrimeContextProvider>

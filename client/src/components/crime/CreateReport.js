@@ -4,7 +4,7 @@ import api from "../../utils/api";
 import { CrimeContext } from "../../context/CrimeContext";
 const CreateReport = () => {
   const [crimeDetails, setCrimeDetails] = useState({
-    crimeType: "",
+    crimeType: "Theft",
     description: "",
   });
 
@@ -18,6 +18,7 @@ const CreateReport = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(crimeDetails);
     try {
       const res = await api.post("/crime", crimeDetails);
       console.log(res.data);
@@ -38,7 +39,7 @@ const CreateReport = () => {
           <option value="Murder">Murder</option>
           <option value="Attempt to Murder">Attempt to Murder</option>
           <option value="Assault">Assault</option>
-          <option value="Hit and Run">Assault</option>
+          <option value="Hit and Run">Hit and Run</option>
           <option>Other</option>
         </Form.Select>
       </Form.Group>
