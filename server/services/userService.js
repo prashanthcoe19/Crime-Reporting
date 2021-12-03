@@ -21,9 +21,9 @@ const findUserByEmail = async (email) => {
   }
 };
 
-const getUserById = async ({ id }) => {
+const getUserById = async (id) => {
   try {
-    console.log(`Id is ${id}`);
+    console.log(id);
     const user = await User.findByPk(id);
     return user;
   } catch (err) {

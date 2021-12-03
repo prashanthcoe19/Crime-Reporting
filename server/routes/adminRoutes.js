@@ -18,7 +18,7 @@ const {
   getAllCrimeReports,
 } = require("../controller/adminController");
 const passport = require("../config/passport");
-const passportAdmin = require("../config/passportAdmin");
+// const passportAdmin = require("../config/passportAdmin");
 const { admin, auth } = require("../middleware/auth");
 
 router.route("/dashboard").get(auth, admin, adminDashboard);
@@ -69,16 +69,8 @@ router
 
 router
   .route("/:id")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    crimeDetailsByUser
-  )
-  .put(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    updateCrimeStatus
-  )
-  .delete(passport.authenticate("jwt", { session: false }), admin, deleteUser);
+  .get(auth, admin, crimeDetailsByUser)
+  .post(auth, admin, updateCrimeStatus)
+  .delete(auth, admin, deleteUser);
 
 module.exports = router;

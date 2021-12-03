@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(cors());
-// app.use(passportAdmin.initialize);
+
 app.use(passport.initialize());
 
 app.get("/", (req, res) => {

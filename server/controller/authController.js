@@ -35,7 +35,9 @@ const login = async (req, res) => {
 
 const getLoggedinUser = async (req, res) => {
   try {
+    console.log(req.user.id);
     const user = await userService.getUserById(req.user.id);
+    // console.log(user);
     res.json(user);
   } catch (err) {
     console.log(err.message);

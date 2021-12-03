@@ -10,7 +10,7 @@ const findUserByEmail = async (email) => {
   }
 };
 
-const getCurrentUser = async ({ id }) => {
+const getCurrentUser = async (id) => {
   try {
     console.log(`Id is ${id}`);
     const user = await User.findByPk(id);

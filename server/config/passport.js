@@ -14,9 +14,8 @@ passport.use(
   new JwtStrategy(opts, async function (req, jwt_payload, done) {
     try {
       console.log("Payload is: " + jwt_payload.id);
-      const user = await authService.getCurrentUser({
-        id: jwt_payload.id,
-      });
+      const id = jwt_payload.id;
+      const user = await authService.getCurrentUser(id);
       if (!user) {
         return done(null, false, { message: "User not found" });
       }

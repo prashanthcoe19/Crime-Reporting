@@ -139,10 +139,11 @@ const crimeDetailsByUser = async (req, res) => {
 // };
 
 const updateCrimeStatus = async (req, res) => {
+  console.log(req.body.status);
   try {
     await adminService.updateCrimeStatus(req.body.status, req.params.id);
-    const crime = await crimeService.getCrimeById(req.params.id);
-    res.json(crime);
+    // const crime = await crimeService.getCrimeById(req.params.id);
+    res.redirect("/api/admin/reportList");
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
