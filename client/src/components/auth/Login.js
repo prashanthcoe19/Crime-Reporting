@@ -54,7 +54,7 @@ const Login = () => {
   }
   return (
     <Container>
-      <h1 className="text-primary mt-2 p-3 text-center rounded">Send Token</h1>
+      <h1 className="text-primary mt-2 p-3 text-center rounded">Login</h1>
       <Row className="mt-1">
         <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
           {error ? <AlertC msg={error} /> : null}

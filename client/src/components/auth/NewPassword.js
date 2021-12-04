@@ -1,18 +1,19 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Col, Form, Row, InputGroup } from "react-bootstrap";
+import { Button, Col, Form, Row, InputGroup, Container } from "react-bootstrap";
 // import setAuthToken from "../../utils/setAuthToken";
 import AlertC from "../layout/Alert";
 import { AuthContext } from "../../context/AuthContext";
+import api from "../../utils/api";
 const NewPassword = () => {
   const [formData, setFormData] = useState({
     token: "",
-    password: "",
+    newPassword: "",
   });
-  const { token, password } = formData;
+  const { token, newPassword } = formData;
   const history = useHistory();
   const [error, setError] = useState("");
-
+  const [alert, setAlert] = useState("");
   const [validated, setValidated] = useState(false);
 
   const authContext = useContext(AuthContext);
@@ -25,6 +26,7 @@ const NewPassword = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
       const form = e.currentTarget;
       if (form.checkValidity() === false) {
@@ -33,62 +35,76 @@ const NewPassword = () => {
         setValidated(true);
         return false;
       }
-      history.push("/login");
+      const res = await api.post("/auth/newPassword", formData);
+      console.log(res.data);
+      setTimeout(() => {
+        setAlert("Password successfully changed, Go to Login Page");
+      }, 1000);
+      setFormData("");
+      setAlert("");
+      setError("");
     } catch (err) {
-      console.log(err);
+      console.log(err.response);
+      setError(err.response.data.error);
     }
   };
 
   return (
-    <Row className="mt-1">
-      <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
-        {error ? <AlertC msg={error} /> : null}
-        <Form noValidate validated={validated} onSubmit={onSubmit}>
-          <Form.Group controlId="validationCustomEmail">
-            <Form.Label>Token</Form.Label>
-            <InputGroup hasValidation>
-              <Form.Control
-                name="token"
-                type="text"
-                placeholder="Enter token"
-                value={token}
-                onChange={onChange}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                Enter you email
-              </Form.Control.Feedback>
-            </InputGroup>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+    <Container style={{ marginTop: "5rem" }}>
+      <Row className="mt-1">
+        <h1 className="text-primary mt-2 p-3 text-center rounded">
+          Reset Password
+        </h1>
+        <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
+          {error ? <AlertC msg={error} /> : null}
+          {alert ? <AlertC msg={alert} /> : null}
+          <Form noValidate validated={validated} onSubmit={onSubmit}>
+            <Form.Group controlId="validationCustomEmail">
+              <Form.Label>Token</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  value={password}
+                  name="token"
+                  type="text"
+                  placeholder="Enter token"
+                  value={token}
                   onChange={onChange}
-                  minlength={6}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Enter a new password.
+                  Enter you email
                 </Form.Control.Feedback>
               </InputGroup>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <InputGroup hasValidation>
+                  <Form.Control
+                    name="newPassword"
+                    type="password"
+                    placeholder="Password"
+                    value={newPassword}
+                    onChange={onChange}
+                    minlength={6}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Enter a new password.
+                  </Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
+              <div className="d-grid gap-2 mt-2">
+                <Button
+                  variant="primary btn-block"
+                  type="submit"
+                  style={{ width: "100%" }}
+                >
+                  Send
+                </Button>
+              </div>
             </Form.Group>
-            <div className="d-grid gap-2 mt-2">
-              <Button
-                variant="primary btn-block"
-                type="submit"
-                style={{ width: "100%" }}
-              >
-                Send
-              </Button>
-            </div>
-          </Form.Group>
-        </Form>
-      </Col>
-    </Row>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
