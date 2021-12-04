@@ -16,6 +16,12 @@ const {
   adminLogin,
   adminDashboard,
   getAllCrimeReports,
+  adminForgetPasswordView,
+  adminResetPasswordView,
+  adminForgetPassword,
+  adminResetPassword,
+  searchCrimeByName,
+  searchByCrimeType,
 } = require("../controller/adminController");
 const passport = require("../config/passport");
 // const passportAdmin = require("../config/passportAdmin");
@@ -27,11 +33,24 @@ router.route("/login").get(adminLoginView).post(adminLogin);
 
 router.route("/register").get(adminRegisterView).post(adminRegister);
 
-router.route("/reportList").get(auth, admin, getAllCrimeReports);
+router.route("/reportList").get(auth, getAllCrimeReports);
 
 router
-  .route("/all")
-  .get(passport.authenticate("jwt", { session: false }), getAllUsers);
+  .route("/forgetPassword")
+  .get(adminForgetPasswordView)
+  .post(adminForgetPassword);
+
+router
+  .route("/resetPassword")
+  .get(adminResetPasswordView)
+  .post(adminResetPassword);
+
+router.route("/searchByName").post(auth, admin, searchCrimeByName);
+
+router.route("/searchByCrime").post(auth, admin, searchByCrimeType);
+// router
+//   .route("/all")
+//   .get(passport.authenticate("jwt", { session: false }), getAllUsers);
 
 // router
 //   .route("/crime")

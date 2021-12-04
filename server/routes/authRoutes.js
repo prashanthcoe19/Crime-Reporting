@@ -9,7 +9,7 @@ const {
 const passport = require("../config/passport");
 // const checkAuth = require("../middleware/checkAuth");
 // const { admin } = require("../middleware/auth");
-const { signin } = require("../validation/validator");
+const { signin, email } = require("../validation/validator");
 router
   .route("/")
   .post(signin, login)
@@ -17,5 +17,5 @@ router
 
 router.route("/resetPassword").post(resetPassword);
 
-router.route("/newPassword").put(newPassword);
+router.route("/newPassword").post(newPassword);
 module.exports = router;

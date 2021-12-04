@@ -30,4 +30,45 @@ const getUserById = async (id) => {
     return err;
   }
 };
-module.exports = { createUser, findUserByEmail, getUserById };
+
+const addToken = async (data, email) => {
+  console.log(data);
+  try {
+    const user = await User.update(data, { where: { email: email } });
+    return user;
+  } catch (err) {
+    return err;
+  }
+};
+
+const resetPassword = async (data, id) => {
+  try {
+    const user = await User.update(data, {
+      where: {
+        id: id,
+      },
+      individualHooks: true,
+    });
+    return user;
+  } catch (err) {
+    return err;
+  }
+};
+
+const verifyToken = async (token) => {
+  try {
+    const user = await User.findOne({ where: { resetToken: token } });
+    return user;
+  } catch (err) {
+    return err;
+  }
+};
+
+module.exports = {
+  createUser,
+  findUserByEmail,
+  getUserById,
+  addToken,
+  resetPassword,
+  verifyToken,
+};

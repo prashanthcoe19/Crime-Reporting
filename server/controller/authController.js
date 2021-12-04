@@ -1,17 +1,8 @@
 const generateToken = require("../utils/generateToken");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
 const userService = require("../services/userService");
+const mailer = require("../utils/mail");
 const User = require("../models").User;
-
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key: process.env.api_key,
-    },
-  })
-);
 
 const login = async (req, res) => {
   const { body } = req;
@@ -46,7 +37,7 @@ const getLoggedinUser = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
-  console.log(process.env.api_key);
+  console.log(process.env.email);
   try {
     crypto.randomBytes(32, async (err, buffer) => {
       if (err) console.log(err);
@@ -57,21 +48,23 @@ const resetPassword = async (req, res) => {
           .status(400)
           .json({ msg: "This email is not associated with any account" });
       }
-      await User.update(
+      if (!user.isAdmin) {
+        return res
+          .status(401)
+          .send({ msg: "This email is not authorized as an admin" });
+      }
+      await userService.addToken(
         { resetToken: token, expireToken: Date.now() + 3600000 },
-        {
-          where: { email: req.body.email },
-        }
+        req.body.email
       );
-      await transporter.sendMail({
-        to: req.body.email,
+      mailer({
         from: "necromayhem66@gmail.com",
+        to: req.body.email,
         subject: "Reset Password",
         html: `<p>You requested for password reset</p>
-         <h5> Click in this link <a href="http://localhost.${process.env.PORT}/api/auth/resetPassword/${token}">link</a> 
-         to reset password</h5>`,
+         <h5>Use this ${token} to reset your password</h5>`,
       });
-      res.json({ message: "Check Your Mail" });
+      res.json({ msg: "Check Your Mail" });
     });
   } catch (err) {
     console.log(err);
@@ -82,24 +75,21 @@ const resetPassword = async (req, res) => {
 const newPassword = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
-    const user = await User.findOne({ where: { resetToken: token } });
+    console.log(token);
+    console.log("New Password is " + newPassword);
+    const user = await userService.verifyToken(token);
     if (!user) {
       return res.status(422).json({ error: "Session expired" });
     }
-    await User.update(
+    await userService.resetPassword(
       {
         password: newPassword,
         resetToken: null,
         expireToken: null,
       },
-      {
-        where: {
-          id: user.id,
-        },
-        individualHooks: true,
-      }
+      user.id
     );
-    res.json({ message: "password successfully updated" });
+    return res.json({ msg: "password successfully updated" });
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error");

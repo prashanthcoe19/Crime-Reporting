@@ -45,11 +45,6 @@ const loggedinUserCrimes = async (req, res) => {
   }
 };
 
-const editReport = async (req, res) => {
-  try {
-  } catch (err) {}
-};
-
 // reports according to status of currently logged in user
 const getPendingReports = async (req, res) => {
   try {

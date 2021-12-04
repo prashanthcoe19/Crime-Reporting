@@ -1,4 +1,7 @@
 const Crime = require("../models").Crime;
+const User = require("../models").User;
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const createCrimeReport = async (data) => {
   try {
@@ -60,6 +63,27 @@ const searchCrime = async (term) => {
   }
 };
 
+const searchByName = async (term) => {
+  console.log(term);
+  try {
+    const crimes = Crime.findAll({
+      include: [
+        {
+          model: User,
+          as: "users",
+          where: {
+            fullName: { [Op.like]: `%${term}%` },
+          },
+        },
+      ],
+    });
+    // const crimes = Crime.findAll({ include: [{ model: User, as: "users" }] });
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
+
 const getPending = async (id) => {
   console.log(id);
   try {
@@ -110,6 +134,7 @@ module.exports = {
   getCrimeDetailsByUser,
   getCrimeById,
   searchCrime,
+  searchByName,
   getPending,
   getCompleted,
   getInProgress,

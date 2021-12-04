@@ -50,4 +50,17 @@ const report = [
   },
 ];
 
-module.exports = { signup, signin, report };
+const email = [
+  check("email", "Please include valid email")
+    .isEmail()
+    .notEmpty()
+    .withMessage("Email is required"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(422).json({ errors: errors.array() });
+    next();
+  },
+];
+
+module.exports = { signup, signin, report, email };

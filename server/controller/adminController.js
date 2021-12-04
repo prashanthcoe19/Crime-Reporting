@@ -2,7 +2,10 @@ const adminService = require("../services/adminService");
 const userService = require("../services/userService");
 const crimeService = require("../services/crimeService");
 const generateToken = require("../utils/generateToken");
+const mailer = require("../utils/mail");
 const moment = require("moment");
+const crypto = require("crypto");
+
 //view pages for admin login and register
 const adminLoginView = (req, res) => {
   res.render("../views/auth/login.ejs");
@@ -11,6 +14,15 @@ const adminLoginView = (req, res) => {
 const adminRegisterView = (req, res) => {
   res.render("../views/auth/register.ejs");
 };
+
+const adminForgetPasswordView = (req, res) => {
+  res.render("../views/auth/forgetPassword.ejs");
+};
+
+const adminResetPasswordView = (req, res) => {
+  res.render("../views/auth/resetPassword.ejs");
+};
+
 const adminDashboard = async (req, res) => {
   try {
     const pending = await adminService.allPending();
@@ -52,7 +64,7 @@ const adminRegister = async (req, res) => {
     // console.log(admin);
     if (admin) {
       console.error("User already exists");
-      return res.status(400).send("User already exists");
+      return res.redirect("/api/admin/register");
     }
     admin = await userService.createUser({
       fullName,
@@ -78,9 +90,7 @@ const adminLogin = async (req, res) => {
   try {
     const user = await userService.findUserByEmail(email);
     if (!user) {
-      return res
-        .status(400)
-        .json({ msg: "This email is not associated with any account" });
+      return res.redirect("/api/admin/login");
     }
     if (!(await user.validPassword(password))) {
       return res.status(400).json({ msg: "Invalid Password" });
@@ -90,6 +100,90 @@ const adminLogin = async (req, res) => {
     res.redirect("/api/admin/dashboard");
   } catch (err) {
     console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+const adminForgetPassword = async (req, res) => {
+  console.log(process.env.email);
+  try {
+    crypto.randomBytes(32, async (err, buffer) => {
+      if (err) console.log(err);
+      const token = buffer.toString("hex");
+      const user = await userService.findUserByEmail(req.body.email);
+      if (!user) {
+        return res
+          .status(400)
+          .json({ msg: "This email is not associated with any account" });
+      }
+      if (!user.isAdmin) {
+        return res
+          .status(401)
+          .send({ msg: "This email is not authorized as an admin" });
+      }
+      await userService.addToken(
+        { resetToken: token, expireToken: Date.now() + 3600000 },
+        req.body.email
+      );
+      mailer({
+        from: "necromayhem66@gmail.com",
+        to: req.body.email,
+        subject: "Reset Password",
+        html: `<p>You requested for password reset</p>
+         <h5>Use this ${token} to reset your password</h5>`,
+      });
+      res.redirect("/api/admin/resetPassword");
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+const adminResetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    console.log(token);
+    console.log("New Password is " + newPassword);
+    const user = await userService.verifyToken(token);
+    if (!user) {
+      return res.status(422).json({ error: "Session expired" });
+    }
+    await userService.resetPassword(
+      {
+        password: newPassword,
+        resetToken: null,
+        expireToken: null,
+      },
+      user.id
+    );
+    res.redirect("/api/admin/login");
+    // return res.json({ msg: "password successfully updated" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+const searchByCrimeType = async (req, res) => {
+  try {
+    const crime = await crimeService.searchCrime(req.body.crimeType);
+    res.json(crime);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+const searchCrimeByName = async (req, res) => {
+  try {
+    const crime = await crimeService.searchByName(req.body.name);
+    if (!crime) {
+      return res.json({ msg: "Not found" });
+    }
+    res.json(crime);
+  } catch (err) {
+    console.log(err);
     res.status(500).send("Server Error");
   }
 };
@@ -193,9 +287,15 @@ const allRejectedReports = async (req, res) => {
 module.exports = {
   adminLoginView,
   adminRegisterView,
+  adminForgetPasswordView,
+  adminResetPasswordView,
   adminDashboard,
   adminRegister,
   adminLogin,
+  adminResetPassword,
+  adminForgetPassword,
+  searchCrimeByName,
+  searchByCrimeType,
   crimeDetailsByUser,
   getAllCrimeReports,
   updateCrimeStatus,
