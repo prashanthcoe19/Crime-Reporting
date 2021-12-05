@@ -5,11 +5,10 @@ const {
   getLoggedinUser,
   resetPassword,
   newPassword,
+  changePassword,
 } = require("../controller/authController");
 const passport = require("../config/passport");
-// const checkAuth = require("../middleware/checkAuth");
-// const { admin } = require("../middleware/auth");
-const { signin, email } = require("../validation/validator");
+const { signin, passwordValidate } = require("../validation/validator");
 router
   .route("/")
   .post(signin, login)
@@ -18,4 +17,12 @@ router
 router.route("/resetPassword").post(resetPassword);
 
 router.route("/newPassword").post(newPassword);
+
+router
+  .route("/changePassword")
+  .put(
+    passport.authenticate("jwt", { session: false }),
+    passwordValidate,
+    changePassword
+  );
 module.exports = router;

@@ -63,4 +63,17 @@ const email = [
   },
 ];
 
-module.exports = { signup, signin, report, email };
+const passwordValidate = [
+  check("password")
+    .notEmpty()
+    .withMessage("Password is Required")
+    .isLength({ min: 6 })
+    .withMessage("Password must be 8 characters"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(422).json({ errors: errors.array() });
+    next();
+  },
+];
+module.exports = { signup, signin, report, email, passwordValidate };

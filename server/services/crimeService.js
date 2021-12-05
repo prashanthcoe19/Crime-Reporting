@@ -52,10 +52,11 @@ const getCrimeById = async (id) => {
   }
 };
 
-const searchCrime = async (term) => {
+const searchCrime = async (term, id) => {
   try {
     const crimes = Crime.findAll({
       where: { crimeType: { [Op.like]: `%${term}%` } },
+      include: [{ model: User, as: "users", where: { id: id } }],
     });
     return crimes;
   } catch (err) {
@@ -63,26 +64,26 @@ const searchCrime = async (term) => {
   }
 };
 
-const searchByName = async (term) => {
-  console.log(term);
-  try {
-    const crimes = Crime.findAll({
-      include: [
-        {
-          model: User,
-          as: "users",
-          where: {
-            fullName: { [Op.like]: `%${term}%` },
-          },
-        },
-      ],
-    });
-    // const crimes = Crime.findAll({ include: [{ model: User, as: "users" }] });
-    return crimes;
-  } catch (err) {
-    return err;
-  }
-};
+// const searchByName = async (term) => {
+//   console.log(term);
+//   try {
+//     const crimes = Crime.findAll({
+//       include: [
+//         {
+//           model: User,
+//           as: "users",
+//           where: {
+//             fullName: { [Op.like]: `%${term}%` },
+//           },
+//         },
+//       ],
+//     });
+//     // const crimes = Crime.findAll({ include: [{ model: User, as: "users" }] });
+//     return crimes;
+//   } catch (err) {
+//     return err;
+//   }
+// };
 
 const getPending = async (id) => {
   console.log(id);
@@ -134,7 +135,6 @@ module.exports = {
   getCrimeDetailsByUser,
   getCrimeById,
   searchCrime,
-  searchByName,
   getPending,
   getCompleted,
   getInProgress,

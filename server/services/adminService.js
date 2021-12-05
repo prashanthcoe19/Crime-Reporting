@@ -1,6 +1,7 @@
 const Crime = require("../models").Crime;
 const User = require("../models").User;
-
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 const getAllUsers = async () => {
   try {
     const user = await User.findAll({ attributes: { exclude: ["password"] } });
@@ -72,6 +73,39 @@ const getAllCrimeDetails = async () => {
   }
 };
 
+const searchCrime = async (term) => {
+  try {
+    const crimes = Crime.findAll({
+      where: { crimeType: { [Op.like]: `%${term}%` } },
+      include: [{ model: User, as: "users" }],
+    });
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
+
+const searchByName = async (term) => {
+  console.log(term);
+  try {
+    const crimes = Crime.findAll({
+      include: [
+        {
+          model: User,
+          as: "users",
+          where: {
+            fullName: { [Op.like]: `%${term}%` },
+          },
+        },
+      ],
+    });
+    // const crimes = Crime.findAll({ include: [{ model: User, as: "users" }] });
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
+
 module.exports = {
   allPending,
   allCompleted,
@@ -81,4 +115,6 @@ module.exports = {
   updateCrimeStatus,
   getAllUsers,
   deleteUser,
+  searchByName,
+  searchCrime,
 };

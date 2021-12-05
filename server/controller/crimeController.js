@@ -45,6 +45,21 @@ const loggedinUserCrimes = async (req, res) => {
   }
 };
 
+const searchByCrimeType = async (req, res) => {
+  // console.log("Crime is " + req.body.name);
+  try {
+    const crime = await crimeService.searchCrime(
+      req.body.crimeType,
+      req.user.id
+    );
+    if (crime.length === 0) return res.json({ msg: "No Results Found" });
+    res.json(crime);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+
 // reports according to status of currently logged in user
 const getPendingReports = async (req, res) => {
   try {
@@ -93,4 +108,5 @@ module.exports = {
   getCompletedReports,
   getRejectedReports,
   updateReport,
+  searchByCrimeType,
 };

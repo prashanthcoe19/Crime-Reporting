@@ -2,27 +2,29 @@
 <html lang="en">
   <%- include("../partials/head.ejs") %>
   <body>
-    <div class="container">
+    <div class="container" id="quickForm">
       <div class="row">
         <div class="col-md-4 offset-md-4">
           <div class="login-form bg-light p-4">
             <form action="/api/admin/login" method="POST" class="row g-3">
               <h4>Login || Admin Panel</h4>
-              <div class="col-12">
+              <div class="form-group col-12">
                 <label>Email</label>
                 <input
                   type="email"
                   name="email"
                   class="form-control"
+                  id="exampleInputEmail1"
                   placeholder="Email"
                 />
               </div>
-              <div class="col-12">
+              <div class="form-group col-12">
                 <label>Password</label>
                 <input
                   type="password"
                   name="password"
                   class="form-control"
+                  id="exampleInputPassword1"
                   placeholder="Password"
                 />
               </div>

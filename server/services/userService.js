@@ -11,6 +11,21 @@ const createUser = async (data) => {
   }
 };
 
+const editUser = async (data, id) => {
+  console.log(data);
+  try {
+    const user = User.update(data, {
+      where: {
+        id: id,
+      },
+      individualHooks: true,
+    });
+    return user;
+  } catch (err) {
+    return err;
+  }
+};
+
 const findUserByEmail = async (email) => {
   // const { email } = data;
   try {
@@ -66,6 +81,7 @@ const verifyToken = async (token) => {
 
 module.exports = {
   createUser,
+  editUser,
   findUserByEmail,
   getUserById,
   addToken,

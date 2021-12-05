@@ -8,6 +8,7 @@ const {
   getCompletedReports,
   getRejectedReports,
   updateReport,
+  searchByCrimeType,
 } = require("../controller/crimeController");
 
 // const crimeController = require("../controller/crimeController");
@@ -17,6 +18,10 @@ router
   .route("/")
   .get(passport.authenticate("jwt", { session: false }), loggedinUserCrimes)
   .post(passport.authenticate("jwt", { session: false }), createReport);
+
+router
+  .route("/searchByCrime")
+  .post(passport.authenticate("jwt", { session: false }), searchByCrimeType);
 
 router
   .route("/pending")

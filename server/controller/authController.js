@@ -96,4 +96,31 @@ const newPassword = async (req, res) => {
   }
 };
 
-module.exports = { login, getLoggedinUser, resetPassword, newPassword };
+const changePassword = async (req, res) => {
+  const { password, newPassword } = req.body;
+  try {
+    let user = await userService.getUserById(req.user.id);
+    if (!(await user.validPassword(password))) {
+      return res.status(400).json({ msg: "Invalid Password" });
+    }
+    await userService.editUser(
+      {
+        password: newPassword,
+      },
+      req.user.id
+    );
+    user = await userService.getUserById(req.user.id);
+    return res.json(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+module.exports = {
+  login,
+  getLoggedinUser,
+  resetPassword,
+  newPassword,
+  changePassword,
+};

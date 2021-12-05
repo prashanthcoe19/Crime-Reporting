@@ -23,6 +23,13 @@ const adminResetPasswordView = (req, res) => {
   res.render("../views/auth/resetPassword.ejs");
 };
 
+const adminSearchView = (req, res) => {
+  res.render("../views/admin/search.ejs", {
+    user: req.user,
+    title: "Search",
+    query: req.query.name,
+  });
+};
 const adminDashboard = async (req, res) => {
   try {
     const pending = await adminService.allPending();
@@ -167,8 +174,14 @@ const adminResetPassword = async (req, res) => {
 
 const searchByCrimeType = async (req, res) => {
   try {
-    const crime = await crimeService.searchCrime(req.body.crimeType);
-    res.json(crime);
+    const crime = await adminService.searchCrime(req.body.name);
+    console.log(crime);
+    res.render("../views/admin/searchResults.ejs", {
+      user: req.user,
+      crime: crime,
+      title: "Search Results",
+      moment: moment,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error");
@@ -176,12 +189,19 @@ const searchByCrimeType = async (req, res) => {
 };
 
 const searchCrimeByName = async (req, res) => {
+  // console.log("Name is " + req.body.name);
   try {
-    const crime = await crimeService.searchByName(req.body.name);
+    const crime = await adminService.searchByName(req.body.name);
     if (!crime) {
       return res.json({ msg: "Not found" });
     }
-    res.json(crime);
+    // res.json(crime);
+    res.render("../views/admin/searchResults", {
+      user: req.user,
+      crime: crime,
+      title: "Search Results",
+      moment: moment,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error");
@@ -221,16 +241,6 @@ const crimeDetailsByUser = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
-
-// const allCrimeDetails = async (req, res) => {
-//   try {
-//     const crimes = await adminService.getAllCrimeDetails();
-//     res.json(crimes);
-//   } catch (err) {
-//     console.log(err.message);
-//     res.status(500).send("Server Error");
-//   }
-// };
 
 const updateCrimeStatus = async (req, res) => {
   console.log(req.body.status);
@@ -289,6 +299,7 @@ module.exports = {
   adminRegisterView,
   adminForgetPasswordView,
   adminResetPasswordView,
+  adminSearchView,
   adminDashboard,
   adminRegister,
   adminLogin,

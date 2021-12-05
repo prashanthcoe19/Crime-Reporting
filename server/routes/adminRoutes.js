@@ -22,6 +22,7 @@ const {
   adminResetPassword,
   searchCrimeByName,
   searchByCrimeType,
+  adminSearchView,
 } = require("../controller/adminController");
 const passport = require("../config/passport");
 // const passportAdmin = require("../config/passportAdmin");
@@ -44,6 +45,8 @@ router
   .route("/resetPassword")
   .get(adminResetPasswordView)
   .post(adminResetPassword);
+
+router.route("/searchView").get(auth, admin, adminSearchView);
 
 router.route("/searchByName").post(auth, admin, searchCrimeByName);
 

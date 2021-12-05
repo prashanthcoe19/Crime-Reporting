@@ -12,7 +12,25 @@
         <%- include("../layout/content-wrapper.ejs") %>
         <section class="content">
           <div class="container-fluid">
+            <h2 class="text-center display-4">Search</h2>
             <div class="row">
+              <div class="col-md-8 offset-md-2">
+                <form action="/api/admin/searchByName" type="POST">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      name="name"
+                      class="form-control form-control-lg"
+                      placeholder="Type your keywords here"
+                    />
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-lg btn-default">
+                        <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
@@ -32,6 +50,7 @@
                       <thead>
                         <tr>
                           <th>Date</th>
+                          <th>Victim Name</th>
                           <th>CrimeType</th>
                           <th>Description</th>
                           <th>Status</th>
@@ -39,11 +58,12 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <% for(item of crimes){%>
+                        <% for(item of crime){%>
                         <tr>
                           <td>
                             <%= moment(item.createdAt).format("MMM Do YYYY") %>
                           </td>
+                          <td><%= item.users.fullName %></td>
                           <td><%= item.crimeType %></td>
                           <td><%= item.description %></td>
                           <td><%= item.status %></td>

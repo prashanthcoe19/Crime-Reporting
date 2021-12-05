@@ -1,9 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../layout/header.ejs") %>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Preloader -->
 
-<%- include("../layout/header.ejs") %>
-<%- include("../layout/preloader.ejs") %>
-<%- include("../layout/navbar.ejs") %> 
-<%-include("../layout/sidebar.ejs")%>
-  <div class="content-wrapper">
+      <%- include("../layout/preloader.ejs") %> <%-
+      include("../layout/navbar.ejs") %> <%-include("../layout/sidebar.ejs") %>
+      <div class="content-wrapper">
         <%- include("../layout/content-wrapper.ejs") %>
         <section class="content">
           <div class="container-fluid">
@@ -29,8 +33,10 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                   <div class="inner">
-                    <h3><%= inProgress %><sup style="font-size: 20px">%</sup></h3>
-        
+                    <h3>
+                      <%= inProgress %><sup style="font-size: 20px">%</sup>
+                    </h3>
+
                     <p>In Progress</p>
                   </div>
                   <div class="icon">
@@ -47,7 +53,7 @@
                 <div class="small-box bg-warning">
                   <div class="inner">
                     <h3><%= completed %></h3>
-        
+
                     <p>Completed</p>
                   </div>
                   <div class="icon">
@@ -64,7 +70,7 @@
                 <div class="small-box bg-danger">
                   <div class="inner">
                     <h3><%= rejected %></h3>
-        
+
                     <p>Rejected</p>
                   </div>
                   <div class="icon">
@@ -78,8 +84,10 @@
               <!-- ./col -->
             </div>
           </div>
-        </section>        
+        </section>
       </div>
       <%- include("../layout/footer.ejs") %>
     </div>
     <%- include("../layout/js.ejs") %>
+  </body>
+</html>
