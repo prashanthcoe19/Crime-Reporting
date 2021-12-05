@@ -9,7 +9,7 @@ import CrimeDashboard from "../components/crime/CrimeDashboard";
 import ForgetPassword from "../components/auth/ForgetPassword";
 import NewPassword from "../components/auth/NewPassword";
 
-const Routess = () => {
+const Routess = (props) => {
   return (
     <section className="container">
       <Switch>

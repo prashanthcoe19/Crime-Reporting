@@ -5,6 +5,7 @@ import { CrimeContext } from "../../context/CrimeContext";
 import Spinnner from "../layout/Spinner";
 import { Redirect } from "react-router-dom";
 import ReportList from "./ReportList";
+import SearchCrime from "./SearchCrime";
 const CrimeDashboard = () => {
   const { auth } = useContext(AuthContext);
   const { loading, crimes, getCurrentUserReports } = useContext(CrimeContext);
@@ -20,7 +21,6 @@ const CrimeDashboard = () => {
   if (!crimes && loading) return <Spinnner />;
   return (
     <Fragment>
-      {/* <ReportNumbers /> */}
       <ReportList />
     </Fragment>
   );

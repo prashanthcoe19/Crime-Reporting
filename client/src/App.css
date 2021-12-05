@@ -41,7 +41,7 @@ img {
   align-items: center;
   background-color: #009ffd !important;
   padding: 0.7rem 2rem;
-  position: fixed;
+  /* position: fixed; */
   z-index: 1;
   width: 100%;
   top: 0;
@@ -148,7 +148,7 @@ img {
   color: #fff;
   padding: 16px 30px;
   min-width: 100%;
-  margin-top: 8rem;
+  /* margin-top: 8rem; */
   border-radius: 3px 3px 0 0;
 }
 .table-title h2 {

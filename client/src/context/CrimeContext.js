@@ -86,7 +86,6 @@ const CrimeContextProvider = (props) => {
   };
   useEffect(() => {
     getCurrentUserReports();
-    // getPendingReports();
   }, []);
 
   // if (loading) return <Spinnner />;

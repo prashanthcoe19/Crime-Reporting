@@ -2,6 +2,7 @@ import React, { useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import Logout from "./Logout";
+import EditProfile from "./EditProfile";
 const Navbar = () => {
   const authContext = useContext(AuthContext);
   const { user, auth } = authContext;
@@ -9,6 +10,12 @@ const Navbar = () => {
   const authLinks = (
     <Fragment>
       <ul style={{ alignItems: "center" }}>
+        <li style={{ marginRight: "5px" }}>
+          <EditProfile />
+        </li>
+        <li style={{ marginRight: "5px" }}>
+          <i class="fas fa-user-circle fa-2x"></i>
+        </li>
         <li style={{ margin: "0 5px 0 0" }}>@{auth ? user?.username : null}</li>
         <li>
           <Logout />

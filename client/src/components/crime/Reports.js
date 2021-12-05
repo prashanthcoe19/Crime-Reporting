@@ -15,7 +15,7 @@ const Reports = ({ report }) => {
 
   return (
     <Fragment>
-      <td>{moment(report.createdAt).format("MMM Do YYYY")}</td>
+      <td>{moment(report.createdAt).format("YYYY-MM-DD")}</td>
       <td>{report.crimeType}</td>
       <td>{report.description}</td>
       <td>{report.status}</td>

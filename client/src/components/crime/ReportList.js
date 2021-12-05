@@ -14,11 +14,10 @@ const ReportList = () => {
 
   const [show, setShow] = useState(false);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [employeesPerPage] = useState(2)
 
   const handleShowAlert = () => {
     setShowAlert(true);
@@ -39,12 +38,25 @@ const ReportList = () => {
     <>
       <div className="table-title">
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <h2>
               Manage <b>Reports</b>
             </h2>
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-4">
+            <form className="form-inline my-2 my-lg-0">
+              <input
+                className="form-control mr-sm-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                }}
+              />
+            </form>
+          </div>
+          <div className="col-sm-4">
             <Button
               onClick={handleShow}
               className="btn btn-success"
@@ -72,14 +84,32 @@ const ReportList = () => {
           </tr>
         </thead>
         <tbody>
-          {crimes.map((report) => (
-            <tr key={report.id}>
-              <Reports report={report} />
-            </tr>
-          ))}
+          {crimes
+            .filter((report) => {
+              if (searchTerm === "") {
+                return report;
+              } else if (
+                report.crimeType
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase()) ||
+                report.description
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase()) ||
+                report.status
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase()) ||
+                report.createdAt.includes(searchTerm)
+              ) {
+                return report;
+              }
+            })
+            .map((report) => (
+              <tr key={report.id}>
+                <Reports report={report} />
+              </tr>
+            ))}
         </tbody>
       </Table>
-
       <Modal
         show={show}
         onHide={handleClose}
