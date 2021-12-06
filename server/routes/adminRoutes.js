@@ -1,38 +1,41 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllUsers,
-  deleteUser,
-  crimeDetailsByUser,
-  allCrimeDetails,
-  allPendingReports,
-  allInProgressReports,
-  allRejectedReports,
-  allCompletedReports,
-  updateCrimeStatus,
   adminLoginView,
   adminRegisterView,
-  adminRegister,
-  adminLogin,
-  adminDashboard,
-  getAllCrimeReports,
   adminForgetPasswordView,
   adminResetPasswordView,
-  adminForgetPassword,
+  adminChangePasswordView,
+  adminRegister,
+  adminLogin,
+  adminLogout,
   adminResetPassword,
+  adminForgetPassword,
+  adminChangePassword,
+} = require("../controller/admin/adminAuth");
+const {
+  adminSearchView,
+  adminDashboard,
   searchCrimeByName,
   searchByCrimeType,
-  adminSearchView,
-} = require("../controller/adminController");
-const passport = require("../config/passport");
-// const passportAdmin = require("../config/passportAdmin");
+  crimeDetailsByUser,
+  getAllCrimeReports,
+  updateCrimeStatus,
+  deleteReport,
+  getAllUsers,
+} = require("../controller/admin/adminController");
+
 const { admin, auth } = require("../middleware/auth");
+const { signup, signin } = require("../validation/adminValidator");
+const { passwordValidate } = require("../validation/validator");
 
 router.route("/dashboard").get(auth, admin, adminDashboard);
 
-router.route("/login").get(adminLoginView).post(adminLogin);
+router.route("/login").get(adminLoginView).post(signin, adminLogin);
 
-router.route("/register").get(adminRegisterView).post(adminRegister);
+router.route("/logout").get(auth, adminLogout);
+
+router.route("/register").get(adminRegisterView).post(signup, adminRegister);
 
 router.route("/reportList").get(auth, getAllCrimeReports);
 
@@ -46,53 +49,22 @@ router
   .get(adminResetPasswordView)
   .post(adminResetPassword);
 
+router
+  .route("/changePassword")
+  .get(auth, admin, adminChangePasswordView)
+  .post(auth, admin, passwordValidate, adminChangePassword);
+
 router.route("/searchView").get(auth, admin, adminSearchView);
 
 router.route("/searchByName").post(auth, admin, searchCrimeByName);
 
 router.route("/searchByCrime").post(auth, admin, searchByCrimeType);
-// router
-//   .route("/all")
-//   .get(passport.authenticate("jwt", { session: false }), getAllUsers);
 
-// router
-//   .route("/crime")
-//   .get(
-//     passport.authenticate("jwt", { session: false }),
-//     admin,
-//     allCrimeDetails
-//   );
-
-router.route("/pending").get(auth, admin, allPendingReports);
-
-router
-  .route("/progess")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    allInProgressReports
-  );
-
-router
-  .route("/completed")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    allCompletedReports
-  );
-
-router
-  .route("/rejected")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    admin,
-    allRejectedReports
-  );
+router.route("/deleteReport/:id").get(auth, admin, deleteReport);
 
 router
   .route("/:id")
   .get(auth, admin, crimeDetailsByUser)
-  .post(auth, admin, updateCrimeStatus)
-  .delete(auth, admin, deleteUser);
+  .post(auth, admin, updateCrimeStatus);
 
 module.exports = router;

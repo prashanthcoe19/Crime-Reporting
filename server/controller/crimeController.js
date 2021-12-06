@@ -46,7 +46,6 @@ const loggedinUserCrimes = async (req, res) => {
 };
 
 const searchByCrimeType = async (req, res) => {
-  // console.log("Crime is " + req.body.name);
   try {
     const crime = await crimeService.searchCrime(
       req.body.crimeType,

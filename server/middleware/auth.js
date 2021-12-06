@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
   //check if not token
 
   if (!token) {
-    return res.status(401).send("No token, auth denied");
+    return res.status(401).send("Unauthorized");
   }
   try {
     const decoded = jwt.verify(token, config.get("jwtSecret"));

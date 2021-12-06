@@ -28,6 +28,15 @@ const updateCrimeStatus = async (data, id) => {
   }
 };
 
+const crimeById = async (id) => {
+  try {
+    const crime = await Crime.findByPk(id);
+    return crime;
+  } catch (err) {
+    return err;
+  }
+};
+
 const allPending = async () => {
   try {
     const crimes = Crime.findAll({ where: { status: "Pending" } });
@@ -99,7 +108,6 @@ const searchByName = async (term) => {
         },
       ],
     });
-    // const crimes = Crime.findAll({ include: [{ model: User, as: "users" }] });
     return crimes;
   } catch (err) {
     return err;

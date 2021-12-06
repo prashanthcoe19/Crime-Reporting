@@ -34,8 +34,12 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.get("/", (req, res) => {
-  console.log(path.join(__dirname + "/public"));
-  res.render("admin/landing.ejs");
+  if (req.user) {
+    res.redirect("/api/admin/dashboard");
+  } else {
+    res.redirect("/api/admin/login");
+  }
+
   // res.json({ msg: "Welcome to crime reporting app" });
 });
 

@@ -2,7 +2,6 @@ const generateToken = require("../utils/generateToken");
 const crypto = require("crypto");
 const userService = require("../services/userService");
 const mailer = require("../utils/mail");
-const User = require("../models").User;
 
 const login = async (req, res) => {
   const { body } = req;

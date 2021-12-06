@@ -1,7 +1,7 @@
 const passport = require("passport");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const authService = require("../services/authService");
+const userService = require("../services/userService");
 const config = require("config");
 
 const opts = {};
@@ -15,7 +15,7 @@ passport.use(
     try {
       console.log("Payload is: " + jwt_payload.id);
       const id = jwt_payload.id;
-      const user = await authService.getCurrentUser(id);
+      const user = await userService.getUserById(id);
       if (!user) {
         return done(null, false, { message: "User not found" });
       }

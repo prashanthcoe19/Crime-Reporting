@@ -8,13 +8,30 @@
           <div class="login-form bg-light p-4">
             <form action="/api/admin/login" method="POST" class="row g-3">
               <h4>Login || Admin Panel</h4>
+              <% if(typeof alert != 'undefined') { %> <%
+              alert.forEach(function(error) { %>
+              <div
+                class="alert alert-warning alert-dismissible fade show"
+                role="alert"
+                style="font-size: 12px; padding: 5px 5px 5px 5px"
+              >
+                <%= error.msg %>
+              </div>
+              <% }) %> <% } %> <% if(message != " "){%>
+              <div
+                class="alert alert-warning alert-dismissible fade show"
+                role="alert"
+                style="font-size: 12px; padding: 5px 5px 5px 5px"
+              >
+                <%= message %>
+              </div>
+              <%}%>
               <div class="form-group col-12">
                 <label>Email</label>
                 <input
                   type="email"
                   name="email"
                   class="form-control"
-                  id="exampleInputEmail1"
                   placeholder="Email"
                 />
               </div>
@@ -24,7 +41,6 @@
                   type="password"
                   name="password"
                   class="form-control"
-                  id="exampleInputPassword1"
                   placeholder="Password"
                 />
               </div>
