@@ -7,7 +7,9 @@ const CreateReport = () => {
     crimeType: "Theft",
     description: "",
   });
-
+  // const [other, setOther] = useState(false);
+  // const [otherText, setOtherText] = useState("");
+  // console.log(other);
   const { crimeType, description } = crimeDetails;
 
   const { setCrimes, getCurrentUserReports } = useContext(CrimeContext);
@@ -40,9 +42,19 @@ const CreateReport = () => {
           <option value="Attempt to Murder">Attempt to Murder</option>
           <option value="Assault">Assault</option>
           <option value="Hit and Run">Hit and Run</option>
-          <option>Other</option>
+          <option value="Other">Other</option>
         </Form.Select>
       </Form.Group>
+      {/* {other && (
+        <Form.Group>
+          <Form.Control
+            type="text"
+            placeHolder="Other Cases"
+            value={otherText}
+            handleChange={handleOther}
+          />
+        </Form.Group>
+      )} */}
       <Form.Group>
         <Form.Label>Description</Form.Label>
         <FloatingLabel controlId="floatingTextarea2" label="Description">

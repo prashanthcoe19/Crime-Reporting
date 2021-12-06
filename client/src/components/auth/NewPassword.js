@@ -1,9 +1,6 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import { Button, Col, Form, Row, InputGroup, Container } from "react-bootstrap";
-// import setAuthToken from "../../utils/setAuthToken";
 import AlertC from "../layout/Alert";
-import { AuthContext } from "../../context/AuthContext";
 import api from "../../utils/api";
 const NewPassword = () => {
   const [formData, setFormData] = useState({
@@ -11,12 +8,9 @@ const NewPassword = () => {
     newPassword: "",
   });
   const { token, newPassword } = formData;
-  const history = useHistory();
   const [error, setError] = useState("");
   const [alert, setAlert] = useState("");
   const [validated, setValidated] = useState(false);
-
-  const authContext = useContext(AuthContext);
 
   //   const { user, getUser, auth, loading } = authContext;
 

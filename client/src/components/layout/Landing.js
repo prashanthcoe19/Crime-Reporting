@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 const Landing = () => {
-  const { auth, user, loading } = useContext(AuthContext);
+  const { auth, loading } = useContext(AuthContext);
   console.log(auth);
   if (auth & !loading) return <Redirect to="/dashboard" />;
   return (

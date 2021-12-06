@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Col, Container, Form, Row, InputGroup } from "react-bootstrap";
 import AlertC from "../layout/Alert";
 import api from "../../utils/api";
-import { AuthContext } from "../../context/AuthContext";
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
 
@@ -11,9 +10,6 @@ const ForgetPassword = () => {
 
   const [validated, setValidated] = useState(false);
 
-  //   const authContext = useContext(AuthContext);
-
-  //   const { user, getUser, auth, loading } = authContext;
   const history = useHistory();
   const onChange = (e) => {
     setEmail(e.target.value);
