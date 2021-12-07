@@ -25,6 +25,8 @@ app.use(express.static(path.join(__dirname + "/public")));
 
 // method inbuilt in express to recognize the incoming Request Object as a JSON Object
 app.use(express.json({ extended: false }));
+
+//// method inbuilt in express to recognize the incoming Request Object as a text
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
@@ -38,8 +40,11 @@ app.get("/", (req, res) => {
   } else {
     res.redirect("/api/admin/login");
   }
-
   // res.json({ msg: "Welcome to crime reporting app" });
+});
+
+app.get("*", (req, res) => {
+  res.render("../views/admin/error.ejs");
 });
 
 app.use("/api/users", users);
@@ -47,8 +52,8 @@ app.use("/api/auth", auth);
 app.use("/api/crime", crime);
 app.use("/api/admin", admin);
 
-// app.use(notFound);
-// app.use(errorHandling);
+app.use(notFound);
+app.use(errorHandling);
 
 app.listen(process.env.PORT, (err) => {
   if (err) throw err;

@@ -11,13 +11,17 @@ const {
   searchByCrimeType,
 } = require("../controller/crimeController");
 
-// const crimeController = require("../controller/crimeController");
 const passport = require("../config/passport");
+const { reportValidate } = require("../validation/validator");
 
 router
   .route("/")
   .get(passport.authenticate("jwt", { session: false }), loggedinUserCrimes)
-  .post(passport.authenticate("jwt", { session: false }), createReport);
+  .post(
+    passport.authenticate("jwt", { session: false }),
+    reportValidate,
+    createReport
+  );
 
 router
   .route("/searchByCrime")
@@ -41,5 +45,9 @@ router
 
 router
   .route("/:id")
-  .put(passport.authenticate("jwt", { session: false }), updateReport);
+  .put(
+    passport.authenticate("jwt", { session: false }),
+    reportValidate,
+    updateReport
+  );
 module.exports = router;

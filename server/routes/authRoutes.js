@@ -8,13 +8,17 @@ const {
   changePassword,
 } = require("../controller/authController");
 const passport = require("../config/passport");
-const { signin, passwordValidate } = require("../validation/validator");
+const {
+  signinValidate,
+  passwordValidate,
+  emailValidate,
+} = require("../validation/validator");
 router
   .route("/")
-  .post(signin, login)
+  .post(signinValidate, login)
   .get(passport.authenticate("jwt", { session: false }), getLoggedinUser);
 
-router.route("/resetPassword").post(resetPassword);
+router.route("/resetPassword").post(emailValidate, resetPassword);
 
 router.route("/newPassword").post(newPassword);
 

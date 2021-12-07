@@ -1,6 +1,6 @@
 const { check, validationResult } = require("express-validator");
 
-const signup = [
+const signupValidate = [
   check("fullName")
     .trim()
     .escape()
@@ -24,7 +24,7 @@ const signup = [
   },
 ];
 
-const signin = [
+const signinValidate = [
   check("email", "Please include a valid email.").isEmail(),
   check("password")
     .notEmpty()
@@ -39,7 +39,7 @@ const signin = [
   },
 ];
 
-const report = [
+const reportValidate = [
   check("crimeType").notEmpty("This field cannot be empty"),
   check("description").notEmpty("This field cannot be empty"),
   (req, res, next) => {
@@ -50,7 +50,7 @@ const report = [
   },
 ];
 
-const email = [
+const emailValidate = [
   check("email", "Please include valid email")
     .isEmail()
     .notEmpty()
@@ -76,4 +76,10 @@ const passwordValidate = [
     next();
   },
 ];
-module.exports = { signup, signin, report, email, passwordValidate };
+module.exports = {
+  signupValidate,
+  signinValidate,
+  reportValidate,
+  emailValidate,
+  passwordValidate,
+};

@@ -23,6 +23,7 @@ const adminResetPasswordView = (req, res) => {
   });
 };
 
+// change password within admin dashboard
 const adminChangePasswordView = (req, res) => {
   res.render("../views/admin/changePassword.ejs", {
     user: req.user,
@@ -65,6 +66,7 @@ const adminRegister = async (req, res) => {
   }
 };
 
+//cookie age
 const maxAge = 3 * 24 * 60 * 60;
 
 const adminLogin = async (req, res) => {

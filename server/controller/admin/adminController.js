@@ -4,8 +4,6 @@ const crimeService = require("../../services/crimeService");
 
 const moment = require("moment");
 
-//view pages for admin login and register
-
 const deleteReport = async (req, res) => {
   try {
     const report = await crimeService.getCrimeById(req.params.id);
@@ -95,7 +93,6 @@ const searchCrimeByName = async (req, res) => {
 const searchCrimeByDate = async (req, res) => {
   try {
     const crime = await adminService.searchByDate(req.body.date);
-    // console.log(crime);
     res.render("../views/admin/searchResults", {
       user: req.user,
       crime: crime,
@@ -146,7 +143,6 @@ const updateCrimeStatus = async (req, res) => {
   console.log(req.body.status);
   try {
     await adminService.updateCrimeStatus(req.body.status, req.params.id);
-    // const crime = await crimeService.getCrimeById(req.params.id);
     res.redirect("/api/admin/reportList");
   } catch (err) {
     console.log(err.message);
