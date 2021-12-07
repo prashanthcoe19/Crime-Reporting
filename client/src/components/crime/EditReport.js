@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from "react";
+import React, { useState, useContext } from "react";
 import api from "../../utils/api";
 import { CrimeContext } from "../../context/CrimeContext";
 import { Form, Button, FloatingLabel } from "react-bootstrap";

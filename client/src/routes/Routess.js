@@ -8,6 +8,7 @@ import Index from "../components/layout/Index";
 import CrimeDashboard from "../components/crime/CrimeDashboard";
 import ForgetPassword from "../components/auth/ForgetPassword";
 import NewPassword from "../components/auth/NewPassword";
+import NotFound from "../components/layout/NotFound";
 
 const Routess = (props) => {
   return (
@@ -19,6 +20,7 @@ const Routess = (props) => {
         <Route exact path="/newPassword" component={NewPassword} />
         <Private exact path="/dashboard" component={CrimeDashboard} />
         <Private exact path="/index" component={Index} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </section>
   );

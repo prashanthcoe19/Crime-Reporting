@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
-import NotFound from "./components/layout/NotFound";
 import AuthContextProvider from "./context/AuthContext";
 import CrimeContextProvider from "./context/CrimeContext";
 import setAuthToken from "./utils/setAuthToken";
@@ -27,8 +26,6 @@ const App = () => {
             <Switch>
               <Route exact path="/" component={Landing} />
               <Route component={Routess} />
-              {/* <Route component={AdminRoute} /> */}
-              <Route path="*" component={NotFound} />
             </Switch>
           </BrowserRouter>
         </CrimeContextProvider>
