@@ -43,12 +43,13 @@ const signin = [
       if (!user) {
         return Promise.reject("User Doesn't Exists");
       }
+      if (!user.isAdmin) {
+        return Promise.reject("Unauthorized");
+      }
     }),
   check("password")
-    .notEmpty()
-    .withMessage("Password is required")
     .isLength({ min: 6 })
-    .withMessage("Enter Valid Password"),
+    .withMessage("Password must be minimum 6 characters"),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -63,26 +64,25 @@ const signin = [
   },
 ];
 
-const report = [
-  check("crimeType").notEmpty("This field cannot be empty"),
-  check("description").notEmpty("This field cannot be empty"),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res.status(422).json({ errors: errors.array() });
-    next();
-  },
-];
-
 const email = [
-  check("email", "Please include valid email")
+  body("email", "Please include a valid email")
     .isEmail()
-    .notEmpty()
-    .withMessage("Email is required"),
+    .custom(async (value) => {
+      let user = await userService.findUserByEmail(value);
+      if (!user) {
+        return Promise.reject("User Doesn't Exists");
+      }
+    }),
   (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res.status(422).json({ errors: errors.array() });
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const alert = errors.array();
+      console.log(alert);
+      return res.render("../views/auth/forgetPassword.ejs", {
+        alert: alert,
+      });
+    }
+    next();
   },
 ];
 
@@ -104,4 +104,24 @@ const passwordValidate = [
     next();
   },
 ];
-module.exports = { signup, signin, report, email, passwordValidate };
+
+const tokenPassword = [
+  check("newPassword")
+    .notEmpty()
+    .withMessage("Password is Required")
+    .isLength({ min: 6 })
+    .withMessage("Password must be 8 characters"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const alert = errors.array();
+      console.log(alert);
+      return res.render("../views/auth/resetPassword.ejs", {
+        alert: alert,
+        message: " ",
+      });
+    }
+    next();
+  },
+];
+module.exports = { signup, signin, email, passwordValidate, tokenPassword };

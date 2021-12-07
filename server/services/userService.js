@@ -73,6 +73,7 @@ const resetPassword = async (data, id) => {
 const verifyToken = async (token) => {
   try {
     const user = await User.findOne({ where: { resetToken: token } });
+    console.log(user);
     return user;
   } catch (err) {
     return err;

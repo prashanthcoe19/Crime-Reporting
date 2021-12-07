@@ -18,7 +18,9 @@ const adminForgetPasswordView = (req, res) => {
 };
 
 const adminResetPasswordView = (req, res) => {
-  res.render("../views/auth/resetPassword.ejs");
+  res.render("../views/auth/resetPassword.ejs", {
+    message: " ",
+  });
 };
 
 const adminChangePasswordView = (req, res) => {
@@ -123,13 +125,17 @@ const adminForgetPassword = async (req, res) => {
 };
 
 const adminResetPassword = async (req, res) => {
+  console.log(req.body);
   try {
     const { token, newPassword } = req.body;
+
     console.log(token);
     console.log("New Password is " + newPassword);
     const user = await userService.verifyToken(token);
     if (!user) {
-      return res.status(422).json({ error: "Session expired" });
+      return res.render("../views/auth/resetPassword", {
+        message: "Token Invalid or Expired",
+      });
     }
     await userService.resetPassword(
       {

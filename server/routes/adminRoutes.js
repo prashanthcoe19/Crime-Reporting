@@ -27,8 +27,13 @@ const {
 } = require("../controller/admin/adminController");
 
 const { admin, auth } = require("../middleware/auth");
-const { signup, signin } = require("../validation/adminValidator");
-const { passwordValidate } = require("../validation/validator");
+const {
+  signup,
+  signin,
+  email,
+  tokenPassword,
+  passwordValidate,
+} = require("../validation/adminValidator");
 
 router.route("/dashboard").get(auth, admin, adminDashboard);
 
@@ -43,12 +48,12 @@ router.route("/reportList").get(auth, getAllCrimeReports);
 router
   .route("/forgetPassword")
   .get(adminForgetPasswordView)
-  .post(adminForgetPassword);
+  .post(email, adminForgetPassword);
 
 router
   .route("/resetPassword")
   .get(adminResetPasswordView)
-  .post(adminResetPassword);
+  .post(tokenPassword, adminResetPassword);
 
 router
   .route("/changePassword")
