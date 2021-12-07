@@ -47,11 +47,6 @@ const resetPassword = async (req, res) => {
           .status(400)
           .json({ msg: "This email is not associated with any account" });
       }
-      if (!user.isAdmin) {
-        return res
-          .status(401)
-          .send({ msg: "This email is not authorized as an admin" });
-      }
       await userService.addToken(
         { resetToken: token, expireToken: Date.now() + 3600000 },
         req.body.email

@@ -43,9 +43,9 @@ app.get("/", (req, res) => {
   // res.json({ msg: "Welcome to crime reporting app" });
 });
 
-app.get("*", (req, res) => {
-  res.render("../views/admin/error.ejs");
-});
+// app.get("*", (req, res) => {
+//   res.render("../views/admin/error.ejs");
+// });
 
 app.use("/api/users", users);
 app.use("/api/auth", auth);

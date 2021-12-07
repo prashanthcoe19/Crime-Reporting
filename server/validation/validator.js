@@ -6,7 +6,7 @@ const signupValidate = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("User name can not be empty!")
+    .withMessage("Username can not be empty!")
     .bail(),
   check("email", "Please include a valid email address.").isEmail(),
   check("password")
@@ -40,8 +40,8 @@ const signinValidate = [
 ];
 
 const reportValidate = [
-  check("crimeType").notEmpty("This field cannot be empty"),
-  check("description").notEmpty("This field cannot be empty"),
+  check("crimeType").notEmpty().withMessage("This field cannot be empty"),
+  check("description").notEmpty().withMessage("This field cannot be empty"),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
