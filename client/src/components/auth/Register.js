@@ -6,7 +6,7 @@ import api from "../../utils/api";
 import AlertC from "../layout/Alert";
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     username: "",
     password: "",
@@ -17,7 +17,7 @@ const Register = () => {
   const history = useHistory();
   const authContext = useContext(AuthContext);
   const { auth } = authContext;
-  const { name, email, username, password, phone } = formData;
+  const { fullName, email, username, password, phone } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,10 +56,10 @@ const Register = () => {
               <Form.Label>Name</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
-                  name="name"
+                  name="fullName"
                   type="text"
                   placeholder="Enter name"
-                  value={name}
+                  value={fullName}
                   onChange={onChange}
                   required
                 />

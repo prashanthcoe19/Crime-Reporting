@@ -34,9 +34,9 @@ const NewPassword = () => {
       setTimeout(() => {
         setAlert("Password successfully changed, Go to Login Page");
       }, 1000);
-      setFormData("");
-      setAlert("");
-      setError("");
+      setFormData(" ");
+      setAlert(" ");
+      setError(" ");
     } catch (err) {
       console.log(err.response);
       setError(err.response.data.error);

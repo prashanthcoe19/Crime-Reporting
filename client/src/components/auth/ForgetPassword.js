@@ -41,7 +41,6 @@ const ForgetPassword = () => {
       <Row className="mt-1">
         <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
           {error ? <AlertC msg={error} /> : null}
-          {alert ? <AlertC msg={alert} /> : null}
           <Form noValidate validated={validated} onSubmit={onSubmit}>
             <Form.Group controlId="validationCustomEmail">
               <Form.Label>Enter Email to Reset Password</Form.Label>
