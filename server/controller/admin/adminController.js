@@ -92,6 +92,21 @@ const searchCrimeByName = async (req, res) => {
   }
 };
 
+const searchCrimeByDate = async (req, res) => {
+  try {
+    const crime = await adminService.searchByDate(req.body.date);
+    // console.log(crime);
+    res.render("../views/admin/searchResults", {
+      user: req.user,
+      crime: crime,
+      title: "Search Results",
+      moment: moment,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const getAllUsers = async (req, res) => {
   try {
     const users = await adminService.getAllUsers();
@@ -139,12 +154,6 @@ const updateCrimeStatus = async (req, res) => {
   }
 };
 
-const deleteCrimeReport = async (req, res) => {
-  try {
-    const user = await adminService.delete;
-  } catch (err) {}
-};
-
 const allPendingReports = async (req, res) => {
   try {
     const crime = await adminService.allPending();
@@ -190,6 +199,7 @@ module.exports = {
   adminDashboard,
   searchCrimeByName,
   searchByCrimeType,
+  searchCrimeByDate,
   crimeDetailsByUser,
   getAllCrimeReports,
   updateCrimeStatus,

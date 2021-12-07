@@ -1,7 +1,9 @@
 const Crime = require("../models").Crime;
 const User = require("../models").User;
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
+const sequelize = require("sequelize");
+const db = require("../models");
+const { QueryTypes } = require("sequelize");
+const Op = sequelize.Op;
 const getAllUsers = async () => {
   try {
     const user = await User.findAll({ attributes: { exclude: ["password"] } });
@@ -39,7 +41,7 @@ const crimeById = async (id) => {
 
 const allPending = async () => {
   try {
-    const crimes = Crime.findAll({ where: { status: "Pending" } });
+    const crimes = await Crime.findAll({ where: { status: "Pending" } });
     return crimes;
   } catch (err) {
     return err;
@@ -48,7 +50,7 @@ const allPending = async () => {
 
 const allInProgress = async () => {
   try {
-    const crimes = Crime.findAll({ where: { status: "In Progress" } });
+    const crimes = await Crime.findAll({ where: { status: "In Progress" } });
     return crimes;
   } catch (err) {
     return err;
@@ -57,7 +59,7 @@ const allInProgress = async () => {
 
 const allRejected = async () => {
   try {
-    const crimes = Crime.findAll({ where: { status: "Rejected" } });
+    const crimes = await Crime.findAll({ where: { status: "Rejected" } });
     return crimes;
   } catch (err) {
     return err;
@@ -66,7 +68,7 @@ const allRejected = async () => {
 
 const allCompleted = async () => {
   try {
-    const crimes = Crime.findAll({ where: { status: "Completed" } });
+    const crimes = await Crime.findAll({ where: { status: "Completed" } });
     return crimes;
   } catch (err) {
     return err;
@@ -84,7 +86,7 @@ const getAllCrimeDetails = async () => {
 
 const searchCrime = async (term) => {
   try {
-    const crimes = Crime.findAll({
+    const crimes = await Crime.findAll({
       where: { crimeType: { [Op.like]: `%${term}%` } },
       include: [{ model: User, as: "users" }],
     });
@@ -97,7 +99,7 @@ const searchCrime = async (term) => {
 const searchByName = async (term) => {
   console.log(term);
   try {
-    const crimes = Crime.findAll({
+    const crimes = await Crime.findAll({
       include: [
         {
           model: User,
@@ -114,15 +116,35 @@ const searchByName = async (term) => {
   }
 };
 
+const searchByDate = async (date) => {
+  console.log(date);
+  try {
+    const crimes = await db.sequelize.query(
+      `SELECT crimes.*, users.fullName
+    FROM crimes as crimes 
+    left outer join users ON users.id = crimes.userID where crimes.createdAt like "%${date}%"`,
+      {
+        replacements: ["active"],
+        type: QueryTypes.SELECT,
+      }
+    );
+    return crimes;
+  } catch (err) {
+    return err;
+  }
+};
+
 module.exports = {
   allPending,
   allCompleted,
   allInProgress,
   allRejected,
+  crimeById,
   getAllCrimeDetails,
   updateCrimeStatus,
   getAllUsers,
   deleteUser,
   searchByName,
   searchCrime,
+  searchByDate,
 };

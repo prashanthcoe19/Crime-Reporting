@@ -46,20 +46,34 @@
 <script src="/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/dist/js/pages/dashboard.js"></script>
-<script>
-  $(function () {
-    $('.select2').select2()
-  });
-</script>
+
 
 <script>
-  const actionOnSubmit=()=>{
-    let e= document.getElementById("formChoice");
-    console.log(e);
-    let formAction = e.options[e.selectedIndex].value;
-    console.log("This is formAction" + formAction);
-    document.form1.action = formaction;
-  }
+  let select = document.getElementById("formChoice");
+  let currentOption = 0;
+
+  // Add event listener that listens on when you click "select"
+  select.addEventListener("click", function() {
+    // If one of the other options are selected, then hide it and set it to empty
+    if(currentOption > 0) {
+        document.getElementById('box-' + currentOption).style.display = 'none';
+    }
+    // Set current option to be current option
+    currentOption = this.selectedIndex;
+    console.log(currentOption);
+    // Set box-N to show
+    document.getElementById('box-' + currentOption).style.display = 'block';
+
+    let formAction = select.options[select.selectedIndex].value;
+    document.form1.action = formAction;
+    console.log("Form2 action is" + document.form1.action);
+
+});
+
+  // function onSubmit() {
+  //   let formAction = select.options[select.selectedIndex].value;
+  //   document.form1.action = formAction;
+  // }
 </script>
 </body>
 </html>

@@ -23,37 +23,79 @@
                       id="formChoice"
                       style="width: 100%"
                       name="formChoice"
+                      onchange=";"
                     >
-                      <option value="/api/admin/searchByCrime/" selected>
+                      <option value="" disabled selected style="display: none">
+                        Select Search Options
+                      </option>
+                      <option value="/api/admin/searchByCrime/">
                         Crime Type
                       </option>
                       <option value="/api/admin/searchByName/">
                         User Name
                       </option>
-                      <option value="/api/admin/searchByStatus">Status</option>
+                      <option value="/api/admin/searchByDate">Date</option>
                     </select>
                   </div>
                 </div>
-                <form
-                  action=""
-                  method="POST"
-                  name="form1"
-                  onsubmit="onSubmit()"
-                >
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      placeholder="Type your keywords here"
-                    />
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-lg btn-default">
-                        <i class="fa fa-search"></i>
-                      </button>
+                <div class="form-group" id="box-1" style="display: none">
+                  <form
+                    action="/api/admin/searchByCrime/"
+                    method="POST"
+                    name="form1"
+                  >
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Type your keywords here"
+                      />
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-lg btn-default">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
+                <div class="form-group" id="box-2" style="display: none">
+                  <form
+                    action="/api/admin/searchByName/"
+                    method="POST"
+                    name="form1"
+                  >
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Type your keywords here"
+                      />
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-lg btn-default">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="form-group" id="box-3" style="display: none">
+                  <form
+                    action="/api/admin/searchByDate/"
+                    method="POST"
+                    name="form1"
+                  >
+                    <div class="input-group">
+                      <input type="date" name="date" class="form-control" />
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-lg btn-default">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -61,13 +103,7 @@
       </div>
       <%- include("../layout/footer.ejs") %>
     </div>
-    <script>
-      function onSubmit() {
-        let e = document.getElementById("formChoice");
-        let formAction = e.options[e.selectedIndex].value;
-        document.form1.action = formAction;
-      }
-    </script>
+
     <%- include("../layout/js.ejs") %>
   </body>
 </html>

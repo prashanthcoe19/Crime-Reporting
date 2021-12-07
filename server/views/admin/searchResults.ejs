@@ -63,7 +63,11 @@
                           <td>
                             <%= moment(item.createdAt).format("MMM Do YYYY") %>
                           </td>
+                          <% if(item.fullName) {%>
+                          <td><%= item.fullName %></td>
+                          <%}else{%>
                           <td><%= item.users.fullName %></td>
+                          <%}%>
                           <td><%= item.crimeType %></td>
                           <td><%= item.description %></td>
                           <td><%= item.status %></td>

@@ -23,6 +23,7 @@ const {
   updateCrimeStatus,
   deleteReport,
   getAllUsers,
+  searchCrimeByDate,
 } = require("../controller/admin/adminController");
 
 const { admin, auth } = require("../middleware/auth");
@@ -59,6 +60,8 @@ router.route("/searchView").get(auth, admin, adminSearchView);
 router.route("/searchByName").post(auth, admin, searchCrimeByName);
 
 router.route("/searchByCrime").post(auth, admin, searchByCrimeType);
+
+router.route("/searchByDate").post(auth, admin, searchCrimeByDate);
 
 router.route("/deleteReport/:id").get(auth, admin, deleteReport);
 
