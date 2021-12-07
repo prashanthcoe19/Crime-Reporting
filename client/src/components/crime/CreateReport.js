@@ -3,24 +3,33 @@ import { Form, Button, FloatingLabel } from "react-bootstrap";
 import api from "../../utils/api";
 import { CrimeContext } from "../../context/CrimeContext";
 const CreateReport = () => {
-  const [crimeDetails, setCrimeDetails] = useState({
+  let [crimeDetails, setCrimeDetails] = useState({
     crimeType: "Theft",
     description: "",
   });
-  // const [other, setOther] = useState(false);
-  // const [otherText, setOtherText] = useState("");
-  // console.log(other);
-  const { crimeType, description } = crimeDetails;
+
+  const [other, setOther] = useState(false);
+
+  const [otherText, setOtherText] = useState("");
+
+  let { crimeType, description } = crimeDetails;
 
   const { setCrimes, getCurrentUserReports } = useContext(CrimeContext);
 
   const handleChange = (e) => {
     setCrimeDetails({ ...crimeDetails, [e.target.name]: e.target.value });
+    console.log(e.target.value);
+  };
+
+  const handleOtherText = (e) => {
+    setOtherText(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(crimeDetails);
+    if (crimeDetails.crimeType === "Other") {
+      crimeDetails.crimeType = otherText;
+    }
     try {
       const res = await api.post("/crime", crimeDetails);
       console.log(res.data);
@@ -44,17 +53,18 @@ const CreateReport = () => {
           <option value="Hit and Run">Hit and Run</option>
           <option value="Other">Other</option>
         </Form.Select>
+        {crimeType === "Other" ? (
+          <Form.Group>
+            <Form.Control
+              type="text"
+              placeHolder="Other Cases"
+              onChange={handleOtherText}
+              value={otherText}
+            />
+          </Form.Group>
+        ) : null}
       </Form.Group>
-      {/* {other && (
-        <Form.Group>
-          <Form.Control
-            type="text"
-            placeHolder="Other Cases"
-            value={otherText}
-            handleChange={handleOther}
-          />
-        </Form.Group>
-      )} */}
+
       <Form.Group>
         <Form.Label>Description</Form.Label>
         <FloatingLabel controlId="floatingTextarea2" label="Description">
