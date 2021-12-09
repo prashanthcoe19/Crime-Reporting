@@ -29,11 +29,6 @@ const Reports = ({ report }) => {
             <i class="fas fa-edit"></i>
           </button>
         </OverlayTrigger>
-        <OverlayTrigger overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}>
-          <button className="btn text-danger btn-act" data-toggle="modal">
-            <i class="fas fa-trash"></i>
-          </button>
-        </OverlayTrigger>
       </td>
 
       <Modal show={show} onHide={handleClose}>

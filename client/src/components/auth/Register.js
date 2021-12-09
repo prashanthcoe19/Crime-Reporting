@@ -37,9 +37,8 @@ const Register = () => {
       console.log(res.data);
       history.push("/login");
     } catch (err) {
-      console.log(err.response.data.errors[0].msg);
-      setError(err.response.data.errors[0].msg);
-      // setError(err.response.data.msg);
+      console.log(err.response);
+      setError(err.response.data.msg);
     }
   };
   if (auth === true) {
@@ -118,7 +117,7 @@ const Register = () => {
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
-            <Form.Group controlId="validationCustom03">
+            <Form.Group controlId="validationCustom04">
               <Form.Label>Phone</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
