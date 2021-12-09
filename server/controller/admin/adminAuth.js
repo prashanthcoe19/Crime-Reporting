@@ -157,11 +157,15 @@ const adminResetPassword = async (req, res) => {
 
 const adminChangePassword = async (req, res) => {
   const { password, newPassword } = req.body;
+  console.log(req.body);
+  console.log(req.user.id);
   try {
     let user = await userService.getUserById(req.user.id);
     if (!(await user.validPassword(password))) {
       return res.render("../views/admin/changePassword", {
         message: "Invalid Password",
+        user: req.user,
+        title: "Change Password",
       });
     }
     await userService.editUser(

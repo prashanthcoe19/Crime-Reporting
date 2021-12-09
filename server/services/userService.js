@@ -12,7 +12,7 @@ const createUser = async (data) => {
 };
 
 const editUser = async (data, id) => {
-  console.log(data);
+  console.log("Data is " + data);
   try {
     const user = User.update(data, {
       where: {

@@ -21,6 +21,13 @@ const adminSearchView = (req, res) => {
     query: req.query.name,
   });
 };
+
+// const userListView = (req,res)=>{
+//   res.render("../views/admin/userlist.ejs",{
+//     user: req.user,
+//     title: "User List",
+//   })
+// }
 const adminDashboard = async (req, res) => {
   try {
     const pending = await adminService.allPending();
@@ -107,7 +114,11 @@ const searchCrimeByDate = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await adminService.getAllUsers();
-    res.json(users);
+    res.render("../views/admin/userlist.ejs", {
+      user: req.user,
+      users: users,
+      title: "User List",
+    });
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");

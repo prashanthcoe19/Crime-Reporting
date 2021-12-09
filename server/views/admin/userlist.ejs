@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../layout/header.ejs") %>
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Preloader -->
+      <%- include("../layout/preloader.ejs") %> <%-
+      include("../layout/navbar.ejs") %> <%-include("../layout/sidebar.ejs") %>
+      <div class="content-wrapper">
+        <%- include("../layout/content-wrapper.ejs") %>
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">User List</h3>
+
+                    <!-- <div class="card-tools">
+                      <a href="/api/admin/searchView">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"> Search Report</i>
+                        </button>
+                      </a>
+                    </div> -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body table-responsive p-0">
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Username</th>
+                          <th>Phone</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(item of users){%>
+                        <tr>
+                          <td><%= item.fullName %></td>
+                          <td><%= item.email %></td>
+                          <td><%= item.username %></td>
+                          <td><%= item.phone %></td>
+                        </tr>
+                        <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <%- include("../layout/footer.ejs") %>
+    </div>
+    <%- include("../layout/js.ejs") %>
+  </body>
+</html>

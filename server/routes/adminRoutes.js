@@ -45,6 +45,7 @@ router.route("/register").get(adminRegisterView).post(signup, adminRegister);
 
 router.route("/reportList").get(auth, getAllCrimeReports);
 
+router.route("/allusers").get(auth, admin, getAllUsers);
 router
   .route("/forgetPassword")
   .get(adminForgetPasswordView)
@@ -68,7 +69,7 @@ router.route("/searchByCrime").post(auth, admin, searchByCrimeType);
 
 router.route("/searchByDate").post(auth, admin, searchCrimeByDate);
 
-router.route("/deleteReport/:id").get(auth, admin, deleteReport);
+router.route("/deleteReport/:id").delete(auth, admin, deleteReport);
 
 router
   .route("/:id")

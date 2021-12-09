@@ -6,7 +6,12 @@ const { QueryTypes } = require("sequelize");
 const Op = sequelize.Op;
 const getAllUsers = async () => {
   try {
-    const user = await User.findAll({ attributes: { exclude: ["password"] } });
+    const user = await User.findAll({
+      attributes: { exclude: ["password"] },
+      where: {
+        isAdmin: false,
+      },
+    });
     return user;
   } catch (err) {
     return err;
@@ -117,7 +122,7 @@ const searchByName = async (term) => {
 };
 
 const searchByDate = async (date) => {
-  console.log(date);
+  // console.log(date);
   try {
     const crimes = await db.sequelize.query(
       `SELECT crimes.*, users.fullName

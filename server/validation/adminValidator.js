@@ -99,6 +99,8 @@ const passwordValidate = [
       return res.render("../views/admin/changePassword.ejs", {
         alert: alert,
         message: "",
+        user: req.user,
+        title: "Change Password",
       });
     }
     next();

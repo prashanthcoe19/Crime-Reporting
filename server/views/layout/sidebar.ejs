@@ -51,6 +51,16 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="/api/admin/allusers"  <% if(title==="User List"){%> 
+            class="nav-link active"
+            <%}else{%> 
+              class="nav-link"
+            <%}%> />
+            <i class="nav-icon fas fa-th"></i>
+            <p>User Lists</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="/api/admin/changePassword"  <% if(title==="Change Password"){%> 
             class="nav-link active"
             <%}else{%> 
