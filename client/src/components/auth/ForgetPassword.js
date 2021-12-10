@@ -39,11 +39,19 @@ const ForgetPassword = () => {
   return (
     <Container style={{ marginTop: "5rem" }}>
       <Row className="mt-1">
-        <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
+        <Col
+          lg={5}
+          md={6}
+          sm={12}
+          className="p-5 m-auto shadow-sm rounded-lg"
+          style={{ background: "#addae6" }}
+        >
           {error ? <AlertC msg={error} /> : null}
           <Form noValidate validated={validated} onSubmit={onSubmit}>
             <Form.Group controlId="validationCustomEmail">
-              <Form.Label>Enter Email to Reset Password</Form.Label>
+              <h5 className="text-dark text-center rounded bold">
+                Enter Email to Reset Password
+              </h5>
               <InputGroup hasValidation>
                 <Form.Control
                   name="email"

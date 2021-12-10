@@ -42,7 +42,7 @@ const CreateReport = () => {
     try {
       const res = await api.post("/crime", crimeDetails);
       console.log(res.data);
-      setCrimes((prevState) => [...prevState, res.data]);
+      setCrimes((prevState) => [res.data, ...prevState]);
       //   getCurrentUserReports();
     } catch (err) {
       console.log(err.response.data.errors[0].msg);

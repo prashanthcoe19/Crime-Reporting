@@ -46,11 +46,17 @@ const Register = () => {
   }
   return (
     <Container>
-      <h1 className="text-primary mt-2 p-3 text-center rounded">Register</h1>
       <Row className="mt-1">
-        <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
+        <Col
+          lg={5}
+          md={6}
+          sm={12}
+          className="p-5 m-auto shadow-sm rounded-lg"
+          style={{ background: "#addae6" }}
+        >
           {error ? <AlertC msg={error} /> : null}
           <Form noValidate validated={validated} onSubmit={onSubmit}>
+            <h1 className="text-dark p-1 text-center rounded">Register</h1>
             <Form.Group controlId="validationCustom01">
               <Form.Label>Name</Form.Label>
               <InputGroup hasValidation>
@@ -63,7 +69,7 @@ const Register = () => {
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Enter you name
+                  Enter your name
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>

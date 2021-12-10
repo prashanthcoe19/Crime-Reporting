@@ -9,7 +9,7 @@ import AlertC from "../layout/Alert";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: " ",
-    password: " ",
+    password: "",
   });
 
   const [error, setError] = useState("");
@@ -17,6 +17,7 @@ const Login = () => {
   const [validated, setValidated] = useState(false);
 
   const { email, password } = formData;
+  console.log(formData);
 
   const history = useHistory();
 
@@ -54,11 +55,17 @@ const Login = () => {
   }
   return (
     <Container>
-      <h1 className="text-primary mt-2 p-3 text-center rounded">Login</h1>
       <Row className="mt-1">
-        <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
+        <Col
+          lg={5}
+          md={6}
+          sm={12}
+          className="p-5 m-auto shadow-sm rounded-lg"
+          style={{ background: "#addae6" }}
+        >
           {error ? <AlertC msg={error} /> : null}
           <Form noValidate validated={validated} onSubmit={onSubmit}>
+            <h1 className="text-dark p-1 text-center rounded bold">Login</h1>
             <Form.Group controlId="validationCustomEmail">
               <Form.Label>Email address</Form.Label>
               <InputGroup hasValidation>
@@ -82,10 +89,9 @@ const Login = () => {
                 <Form.Control
                   name="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder="Enter Password"
                   value={password}
                   onChange={onChange}
-                  minlength={6}
                   required
                 />
                 <Form.Control.Feedback type="invalid">

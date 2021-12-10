@@ -12,7 +12,7 @@ import NotFound from "../components/layout/NotFound";
 
 const Routess = (props) => {
   return (
-    <section className="container">
+    <section className="section-container">
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />

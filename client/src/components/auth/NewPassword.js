@@ -44,15 +44,18 @@ const NewPassword = () => {
   };
 
   return (
-    <Container style={{ marginTop: "5rem" }}>
+    <Container>
       <Row className="mt-1">
-        <h1 className="text-primary mt-2 p-3 text-center rounded">
-          Reset Password
-        </h1>
-        <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
+        <Col
+          lg={5}
+          md={6}
+          sm={12}
+          className="p-5 m-auto shadow-sm rounded-lg"
+          style={{ background: "#addae6" }}
+        >
           {error ? <AlertC msg={error} /> : null}
-          {alert ? <AlertC msg={alert} /> : null}
           <Form noValidate validated={validated} onSubmit={onSubmit}>
+            <h5 className="text-dark text-center rounded">Reset Password</h5>
             <Form.Group controlId="validationCustomEmail">
               <Form.Label>Token</Form.Label>
               <InputGroup hasValidation>

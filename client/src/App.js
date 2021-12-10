@@ -8,6 +8,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Routess from "./routes/Routess";
 // import AdminRoute from "./routes/AdminRoute";
 import "./App.css";
+import Footer from "./components/layout/Footer";
 
 const App = () => {
   // let location = useLocation();
@@ -27,6 +28,7 @@ const App = () => {
               <Route exact path="/" component={Landing} />
               <Route component={Routess} />
             </Switch>
+            <Footer />
           </BrowserRouter>
         </CrimeContextProvider>
       </AuthContextProvider>

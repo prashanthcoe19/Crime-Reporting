@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import EditReport from "./EditReport";
 import { Modal, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import moment from "moment";
@@ -8,6 +9,7 @@ const Reports = ({ report }) => {
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const id = 1;
 
   useEffect(() => {
     handleClose();

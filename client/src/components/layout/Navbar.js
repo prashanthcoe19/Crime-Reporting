@@ -8,37 +8,53 @@ const Navbar = () => {
   const { user, auth } = authContext;
   console.log(auth, user);
   const authLinks = (
-    <Fragment>
-      <ul style={{ alignItems: "center" }}>
-        <li style={{ marginRight: "5px" }}>
-          <EditProfile />
-        </li>
-        <li style={{ marginRight: "5px" }}>
-          <i class="fas fa-user-circle fa-2x"></i>
-        </li>
-        <li style={{ margin: "0 5px 0 0" }}>@{auth ? user?.username : null}</li>
-        <li>
-          <Logout />
-        </li>
-      </ul>
-    </Fragment>
+    <ul
+      style={{ alignItems: "center", marginLeft: "auto" }}
+      className="navbar-nav ml-auto"
+    >
+      <li className="nav-item">
+        <i className="fas fa-user-circle fa-2x"></i>
+      </li>
+      <li className="nav-item">@{auth ? user?.username : null}</li>
+      <li className="nav-item">
+        <EditProfile />
+      </li>
+      <li className="nav-item nav-link">
+        <Logout />
+      </li>
+    </ul>
   );
   const guestLinks = (
-    <ul>
-      <li>
-        <Link to="/register">Register</Link>
+    <ul className="navbar-nav text-center" style={{ marginLeft: "auto" }}>
+      <li className="nav-item">
+        <Link to="/register" className="nav-link">
+          Register
+        </Link>
       </li>
-      <li>
-        <Link to="/login">Login</Link>
+      <li className="nav-item">
+        <Link to="/login" className="nav-link">
+          Login
+        </Link>
       </li>
     </ul>
   );
   return (
-    <nav className="navbar navbar-expand-lg">
-      <h1>
-        <i className="fas fa-search">Crime-Reporting</i>
-      </h1>
-      <Fragment>{auth && user ? authLinks : guestLinks}</Fragment>
+    <nav className="navbar navbar-expand-sm py-3 navbar-primary bg-primary">
+      <div className="container">
+        <h1>
+          <i className="fas fa-search">Crime-Reporting</i>
+        </h1>
+        <button
+          className="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#menu"
+        >
+          <i className="fas fa-bars"></i>
+        </button>
+        <div className="collapse navbar-collapse" id="menu">
+          <Fragment>{auth && user ? authLinks : guestLinks}</Fragment>
+        </div>
+      </div>
     </nav>
   );
 };
