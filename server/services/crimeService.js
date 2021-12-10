@@ -18,25 +18,18 @@ const editReport = async (data, id) => {
     const report = await Crime.update(data, {
       where: { id: id },
     });
-    console.log(report);
     return report;
   } catch (err) {
     return err;
   }
 };
-// const getCurrentUserCrimes = async (id) => {
-//   try {
-//     const crimes = await Crime.findAll({where:{userID:id}});
-//     console.log(crimes);
-//     return crimes;
-//   } catch (err) {
-//     return err;
-//   }
-// };
 
 const getCrimeDetailsByUser = async (id) => {
   try {
-    const crimes = await Crime.findAll({ where: { userID: id } });
+    const crimes = await Crime.findAll({
+      where: { userID: id },
+      order: [["createdAt", "DESC"]],
+    });
     return crimes;
   } catch (err) {
     return err;
@@ -64,29 +57,7 @@ const searchCrime = async (term, id) => {
   }
 };
 
-// const searchByName = async (term) => {
-//   console.log(term);
-//   try {
-//     const crimes = Crime.findAll({
-//       include: [
-//         {
-//           model: User,
-//           as: "users",
-//           where: {
-//             fullName: { [Op.like]: `%${term}%` },
-//           },
-//         },
-//       ],
-//     });
-//     // const crimes = Crime.findAll({ include: [{ model: User, as: "users" }] });
-//     return crimes;
-//   } catch (err) {
-//     return err;
-//   }
-// };
-
 const getPending = async (id) => {
-  console.log(id);
   try {
     const crimes = Crime.findAll({ where: { status: "Pending", userID: id } });
     return crimes;
@@ -96,7 +67,6 @@ const getPending = async (id) => {
 };
 
 const getInProgress = async (id) => {
-  console.log(id);
   try {
     const crimes = Crime.findAll({
       where: { status: "In Progress", userID: id },
@@ -108,7 +78,6 @@ const getInProgress = async (id) => {
 };
 
 const getRejected = async (id) => {
-  console.log(id);
   try {
     const crimes = Crime.findAll({ where: { status: "Rejected", userID: id } });
     return crimes;
@@ -118,7 +87,6 @@ const getRejected = async (id) => {
 };
 
 const getCompleted = async (id) => {
-  console.log(id);
   try {
     const crimes = Crime.findAll({
       where: { status: "Completed", userID: id },
@@ -131,7 +99,6 @@ const getCompleted = async (id) => {
 
 module.exports = {
   createCrimeReport,
-  // getCurrentUserCrimes,
   getCrimeDetailsByUser,
   getCrimeById,
   searchCrime,
